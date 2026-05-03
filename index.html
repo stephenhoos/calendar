@@ -276,6 +276,14 @@ const SEED_EVTS = [
   { id:'seed-june11-pickup', date:'2026-06-11', title:"Dad picks up from school", kid:'both', start:'15:00', end:'15:30', notes:"Mom is letting Dad pick Declan & Tiernan up on the last day of school." }
 ];
 const SCHEDULED_EVTS = [
+  { id:'hacker-ai-beg-jun15', date:'2026-06-15', kid:'declan', title:'Coastline Ethical Hacking Camp - Beginner',     start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
+  { id:'hacker-ai-beg-jun16', date:'2026-06-16', kid:'declan', title:'Coastline Ethical Hacking Camp - Beginner',     start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
+  { id:'hacker-ai-beg-jun17', date:'2026-06-17', kid:'declan', title:'Coastline Ethical Hacking Camp - Beginner',     start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
+  { id:'hacker-ai-beg-jun18', date:'2026-06-18', kid:'declan', title:'Coastline Ethical Hacking Camp - Beginner',     start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
+  { id:'hacker-ai-int-jun22', date:'2026-06-22', kid:'declan', title:'Coastline Ethical Hacking Camp - Intermediate', start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
+  { id:'hacker-ai-int-jun23', date:'2026-06-23', kid:'declan', title:'Coastline Ethical Hacking Camp - Intermediate', start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
+  { id:'hacker-ai-int-jun24', date:'2026-06-24', kid:'declan', title:'Coastline Ethical Hacking Camp - Intermediate', start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
+  { id:'hacker-ai-int-jun25', date:'2026-06-25', kid:'declan', title:'Coastline Ethical Hacking Camp - Intermediate', start:'09:00', end:'15:00', notes:'Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided.' },
   { id:'golf-ss-jun15', date:'2026-06-15', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
   { id:'golf-ss-jun16', date:'2026-06-16', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
   { id:'golf-ss-jun17', date:'2026-06-17', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
@@ -429,7 +437,7 @@ const SCHEDULED_EVTS = [
 ];
 
 // ---- STORAGE ----
-const CAL_VERSION = '2026-v4-trim'; // must match edit file // bump this whenever SCHEDULED_EVTS changes to clear stale cache
+const CAL_VERSION = '2026-v5-hacker-ai'; // must match edit file // bump this whenever SCHEDULED_EVTS changes to clear stale cache
 
 // Deleted IDs tracked separately so SCHEDULED_EVTS never resurrect after delete
 function loadDeleted() {
