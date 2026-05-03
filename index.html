@@ -758,4 +758,12 @@ window.addEventListener('storage', function(e) {
 
 <div class="hidden" id="dayOverlay" onclick="closeDayModal(event)">
   <div class="day-modal" onclick="event.stopPropagation()">
-    <div class=
+    <div class="day-modal-hdr">
+      <span id="dayModalTitle"></span>
+      <button class="day-close-btn" onclick="closeDayModal()">&#x2715;</button>
+    </div>
+    <div id="dayModalBody"></div>
+  </div>
+</div>
+</body>
+</html>
