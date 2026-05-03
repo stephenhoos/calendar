@@ -68,6 +68,11 @@ body {
   font-size: 11px; font-weight: 500; letter-spacing: .04em; transition: background .12s, color .12s;
 }
 .export-btn:hover { background: rgba(52,211,153,0.18); color: #a7f3d0; }
+.search-box {
+  width: 170px; height: 30px; background: var(--input-bg); border: 1px solid var(--border-md);
+  border-radius: 7px; padding: 0 10px; color: var(--text-hi); font-size: 12px; font-family: inherit;
+}
+.search-box:focus { outline: none; border-color: #60a5fa; }
 .view-toggle { display: flex; border: 1px solid var(--border-md); border-radius: 7px; overflow: hidden; }
 .vtog {
   padding: 5px 13px; font-size: 12px; cursor: pointer; background: transparent; color: var(--text-mid);
@@ -212,6 +217,29 @@ textarea { resize: vertical; }
 .day-evt-time { font-size: 11px; color: var(--text-mid); min-width: 60px; padding-top: 1px; }
 .day-evt-title { font-size: 12px; color: var(--text-hi); line-height: 1.4; }
 .day-evt-notes { font-size: 10px; color: var(--text-lo); margin-top: 2px; }
+.search-modal { background: var(--modal-bg); border: 1px solid var(--border-md); border-radius: 14px; padding: 20px; width: 100%; max-width: 560px; max-height: 78vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.search-modal-hdr { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 14px; font-weight: 500; color: var(--text-hi); }
+.search-close-btn { background: transparent; border: 1px solid var(--border-md); border-radius: 6px; color: var(--text-mid); cursor: pointer; font-size: 14px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.search-close-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-hi); }
+.search-empty { font-size: 12px; color: var(--text-lo); text-align: center; padding: 20px 0; }
+.search-result { display: grid; grid-template-columns: 86px 64px 1fr 58px; gap: 10px; align-items: start; padding: 9px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.search-result:last-child { border-bottom: none; }
+.search-result:hover { background: rgba(255,255,255,0.04); }
+.sr-date { font-size: 11px; color: var(--text-hi); }
+.sr-time, .sr-custody { font-size: 11px; color: var(--text-mid); }
+.sr-title { font-size: 12px; color: var(--text-hi); line-height: 1.35; }
+.sr-notes { font-size: 10px; color: var(--text-lo); margin-top: 2px; line-height: 1.35; }
+.sr-kid { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-align: right; }
+.sr-kid.declan { color: var(--declan-bg); }
+.sr-kid.tiernan { color: var(--tiernan-bg); }
+.sr-kid.both { color: var(--both-bg); }
+@media (max-width: 640px) {
+  .search-box { width: 130px; }
+  .search-result { grid-template-columns: 1fr 54px; gap: 4px 10px; }
+  .sr-time, .sr-custody { grid-column: 1; }
+  .sr-title { grid-column: 1 / -1; }
+  .sr-kid { grid-column: 2; grid-row: 1; }
+}
 </style>
 </head>
 <body>
@@ -232,6 +260,8 @@ textarea { resize: vertical; }
       <button class="vtog on" id="vbtn-month" onclick="setView('month')">Month</button>
       <button class="vtog"    id="vbtn-week"  onclick="setView('week')">Week</button>
     </div>
+    <input class="search-box" id="searchBox" type="search" placeholder="Search events" onkeydown="searchKey(event)">
+    <button class="icon-btn" onclick="openSearch(document.getElementById('searchBox').value)">&#128269;</button>
     <button class="export-btn" onclick="subscribeCalendar()">&#128197; SUBSCRIBE</button>
   </div>
 </div>
@@ -757,6 +787,60 @@ function closeDayModal(evt) {
     document.getElementById('dayOverlay').classList.add('hidden');
 }
 
+// ---- SEARCH ----
+function searchKey(evt) {
+  if (evt.key === 'Enter') openSearch(document.getElementById('searchBox').value);
+  if (evt.key === 'Escape') document.getElementById('searchBox').value = '';
+}
+function openSearch(query) {
+  const q = query.trim().toLowerCase();
+  const body = document.getElementById('searchModalBody');
+  document.getElementById('searchModalTitle').textContent = q ? 'Search: '+query.trim() : 'Search events';
+  if (!q) {
+    body.innerHTML = '<div class="search-empty">Type a search and press Enter</div>';
+  } else {
+    const results = S.events
+      .filter(e => [e.title, e.notes, e.kid, e.date].join(' ').toLowerCase().includes(q))
+      .sort((a,b) => (a.date+a.start).localeCompare(b.date+b.start));
+    if (!results.length) {
+      body.innerHTML = '<div class="search-empty">No matching events</div>';
+    } else {
+      body.innerHTML = results.map(e => {
+        const d = keyToDate(e.date);
+        const custody = getCustody(d).toUpperCase();
+        const kid = e.kid==='both'?'Both':e.kid.charAt(0).toUpperCase()+e.kid.slice(1);
+        const notes = e.notes ? '<div class="sr-notes">'+escapeHtml(e.notes)+'</div>' : '';
+        return '<div class="search-result" data-search-date="'+e.date+'">'
+          +'<div class="sr-date">'+fmtDate(d)+'</div>'
+          +'<div class="sr-time">'+fmtTime(e.start)+'-'+fmtTime(e.end)+'</div>'
+          +'<div><div class="sr-title">'+escapeHtml(e.title)+'</div>'+notes+'</div>'
+          +'<div><div class="sr-kid '+e.kid+'">'+kid+'</div><div class="sr-custody">'+custody+'</div></div>'
+          +'</div>';
+      }).join('');
+    }
+  }
+  document.getElementById('searchOverlay').classList.remove('hidden');
+}
+function closeSearchModal(evt) {
+  if (!evt || evt.target===document.getElementById('searchOverlay'))
+    document.getElementById('searchOverlay').classList.add('hidden');
+}
+function goToEvent(dateStr) {
+  const d = keyToDate(dateStr);
+  S.month = d.getMonth(); S.year = d.getFullYear(); S.weekStart = mondayOf(d);
+  render(); closeSearchModal(); openDay(dateStr);
+}
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('searchModalBody').addEventListener('click', function(evt) {
+    const result = evt.target.closest('[data-search-date]');
+    if (result) goToEvent(result.getAttribute('data-search-date'));
+  });
+});
+
 // ---- MODAL ----
 function openAdd(dateStr) {
   S.editId=null; modalDateStr=dateStr;
@@ -859,6 +943,15 @@ loadFromServer();
       <button class="day-close-btn" onclick="closeDayModal()">&#x2715;</button>
     </div>
     <div id="dayModalBody"></div>
+  </div>
+</div>
+<div class="hidden" id="searchOverlay" onclick="closeSearchModal(event)">
+  <div class="search-modal" onclick="event.stopPropagation()">
+    <div class="search-modal-hdr">
+      <span id="searchModalTitle"></span>
+      <button class="search-close-btn" onclick="closeSearchModal()">&#x2715;</button>
+    </div>
+    <div id="searchModalBody"></div>
   </div>
 </div>
 </body>
