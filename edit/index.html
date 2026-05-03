@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Declan &amp; Tiernan — Custody Calendar</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --mom-bg:       #0d2240;
+  --mom-soft:     #152d52;
+  --mom-border:   rgba(147,197,253,0.18);
+  --mom-text:     #c9d8ee;
+  --mom-accent:   #93c5fd;
+  --dad-bg:       #38091f;
+  --dad-soft:     #4a1030;
+  --dad-border:   rgba(249,168,212,0.18);
+  --dad-text:     #f0c4d4;
+  --dad-accent:   #f9a8d4;
+  --summer-bg:    #111827;
+  --declan-bg:    #fbbf24;
+  --declan-text:  #78350f;
+  --tiernan-bg:   #34d399;
+  --tiernan-text: #064e3b;
+  --both-bg:      #a78bfa;
+  --both-text:    #2e1065;
+  --body-bg:      #0a0a12;
+  --chrome-bg:    #0d0d1a;
+  --border:       rgba(255,255,255,0.08);
+  --border-md:    rgba(255,255,255,0.14);
+  --modal-bg:     #1a1a2e;
+  --input-bg:     #252540;
+  --text-hi:      #e8e8f4;
+  --text-mid:     #9999bb;
+  --text-lo:      #555577;
+}
+html, body { height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--body-bg); color: var(--text-hi);
+  display: flex; flex-direction: column; min-height: 100vh;
+}
+.topbar {
+  background: var(--chrome-bg); border-bottom: 1px solid var(--border);
+  padding: 10px 16px; display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 10px; flex-shrink: 0;
+}
+.app-title { font-size: 15px; font-weight: 500; color: var(--text-hi); }
+.app-subtitle { font-size: 11px; color: var(--text-mid); margin-top: 1px; }
+.controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.nav-cluster { display: flex; align-items: center; gap: 6px; }
+.nav-label { font-size: 13px; font-weight: 500; min-width: 160px; text-align: center; color: var(--text-hi); }
+.icon-btn {
+  width: 30px; height: 30px; border: 1px solid var(--border-md); border-radius: 7px;
+  background: transparent; color: var(--text-mid); cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; justify-content: center; transition: background .12s, color .12s;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-hi); }
+.today-btn {
+  padding: 0 12px; height: 30px; border: 1px solid var(--border-md); border-radius: 7px;
+  background: transparent; color: var(--text-mid); cursor: pointer;
+  font-size: 11px; font-weight: 500; letter-spacing: .04em; transition: background .12s, color .12s;
+}
+.today-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-hi); }
+.export-btn {
+  padding: 0 12px; height: 30px; border: 1px solid rgba(52,211,153,0.35); border-radius: 7px;
+  background: rgba(52,211,153,0.08); color: #6ee7b7; cursor: pointer;
+  font-size: 11px; font-weight: 500; letter-spacing: .04em; transition: background .12s, color .12s;
+}
+.export-btn:hover { background: rgba(52,211,153,0.18); color: #a7f3d0; }
+.view-toggle { display: flex; border: 1px solid var(--border-md); border-radius: 7px; overflow: hidden; }
+.vtog {
+  padding: 5px 13px; font-size: 12px; cursor: pointer; background: transparent; color: var(--text-mid);
+  border: none; border-right: 1px solid var(--border-md); font-family: inherit; transition: background .12s, color .12s;
+}
+.vtog:last-child { border-right: none; }
+.vtog.on { background: rgba(255,255,255,0.12); color: var(--text-hi); font-weight: 500; }
+.vtog:hover:not(.on) { background: rgba(255,255,255,0.06); }
+.legend {
+  background: var(--chrome-bg); border-bottom: 1px solid var(--border);
+  padding: 7px 16px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; flex-shrink: 0;
+}
+.leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-mid); }
+.leg-sq { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.hint { margin-left: auto; font-size: 11px; color: var(--text-lo); font-style: italic; }
+#calContent { flex: 1; overflow: auto; }
+.month-grid {
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-left: 1px solid var(--border); border-top: 1px solid var(--border); min-width: 560px;
+}
+.day-hdr {
+  background: var(--chrome-bg); padding: 7px 4px; text-align: center;
+  font-size: 11px; font-weight: 500; letter-spacing: .06em; color: var(--text-lo);
+  border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.dcell {
+  min-height: 100px; padding: 5px 6px;
+  border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  cursor: pointer; position: relative; transition: filter .12s;
+}
+.dcell:hover { filter: brightness(1.18); }
+.dcell.mom   { background: var(--mom-bg); border-color: var(--mom-border); }
+.dcell.dad   { background: var(--dad-bg); border-color: var(--dad-border); }
+.dcell.split { background: linear-gradient(135deg, var(--mom-bg) 50%, var(--dad-bg) 50%); border-color: rgba(167,139,250,0.2); }
+.dcell.faded { opacity: 0.32; cursor: default; pointer-events: none; }
+.dcell.faded:hover { filter: none; }
+.split-kid { font-size: 9px; font-weight: 600; letter-spacing: .04em; padding: 1px 5px; border-radius: 3px; margin-bottom: 2px; display: inline-block; }
+.sk-declan  { background: rgba(251,191,36,.22); color: #fde68a; }
+.sk-tiernan { background: rgba(52,211,153,.22); color: #6ee7b7; }
+.tag-split-hdr    { background: rgba(167,139,250,.2);  color: #c4b5fd; }
+.tag-vacation     { background: rgba(249,115,22,.25);  color: #fed7aa; font-weight: 600; }
+.tag-vacation-mid { background: rgba(249,115,22,.12);  color: #fdba74; }
+.tag-holiday      { background: rgba(234,179,8,.28);   color: #fef08a; font-weight: 600; }
+.tag-handoff      { background: rgba(52,211,153,.2);   color: #6ee7b7; font-weight: 600; }
+.tag-school-resume{ background: rgba(99,102,241,.22);  color: #a5b4fc; font-weight: 600; }
+.tag-school       { background: rgba(96,165,250,.22);  color: #93c5fd; }
+.dnum { font-size: 12px; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-bottom: 3px; }
+.dcell.mom   .dnum { color: var(--mom-text); }
+.dcell.dad   .dnum { color: var(--dad-text); }
+.dcell.summer .dnum, .dcell.other .dnum { color: var(--text-lo); }
+.dnum.today { background: #60a5fa; color: #0c1e3a; font-weight: 600; }
+.custody-who { font-size: 9px; font-weight: 600; letter-spacing: .06em; margin-bottom: 4px; opacity: .55; }
+.dcell.mom .custody-who { color: var(--mom-accent); }
+.dcell.dad .custody-who { color: var(--dad-accent); }
+.special-tag { display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .05em; padding: 1px 5px; border-radius: 3px; margin-bottom: 3px; }
+.tag-lastday  { background: rgba(251,191,36,.2);  color: #fbbf24; }
+.tag-summer   { background: rgba(99,102,241,.15); color: #818cf8; }
+.tag-exchange { background: rgba(52,211,153,.15); color: #6ee7b7; }
+.epill { font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; display: block; }
+.epill:hover { opacity: .8; }
+.epill.declan  { background: var(--declan-bg);  color: var(--declan-text); }
+.epill.tiernan { background: var(--tiernan-bg); color: var(--tiernan-text); }
+.epill.both    { background: var(--both-bg);    color: var(--both-text); }
+.more-evts { font-size: 9px; color: var(--text-lo); padding-left: 3px; margin-top: 1px; }
+.week-scroll { overflow: auto; }
+.week-grid { display: grid; grid-template-columns: 50px repeat(7, minmax(0, 1fr)); border-left: 1px solid var(--border); border-top: 1px solid var(--border); min-width: 600px; }
+.wk-corner { background: var(--chrome-bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.wk-day-hdr { text-align: center; padding: 8px 4px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.wk-day-hdr.mom    { background: var(--mom-soft); }
+.wk-day-hdr.dad    { background: var(--dad-soft); }
+.wk-day-hdr.summer { background: var(--summer-bg); }
+.wk-day-hdr.other  { background: var(--chrome-bg); }
+.wk-day-hdr.split  { background: linear-gradient(135deg, var(--mom-soft) 50%, var(--dad-soft) 50%); }
+.wk-dname { font-size: 10px; letter-spacing: .05em; display: block; }
+.wk-day-hdr.mom    .wk-dname { color: var(--mom-accent); }
+.wk-day-hdr.dad    .wk-dname { color: var(--dad-accent); }
+.wk-day-hdr.summer .wk-dname, .wk-day-hdr.other .wk-dname { color: var(--text-lo); }
+.wk-dnum { font-size: 17px; font-weight: 500; display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; }
+.wk-day-hdr.mom    .wk-dnum { color: var(--mom-text); }
+.wk-day-hdr.dad    .wk-dnum { color: var(--dad-text); }
+.wk-day-hdr.summer .wk-dnum, .wk-day-hdr.other .wk-dnum { color: var(--text-lo); }
+.wk-dnum.today { background: #60a5fa; color: #0c1e3a; }
+.wk-time { font-size: 10px; color: var(--text-lo); text-align: right; padding: 3px 7px 0 0; height: 52px; background: var(--chrome-bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.wk-slot { height: 52px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; cursor: pointer; transition: filter .1s; }
+.wk-slot:last-child { border-right: none; }
+.wk-slot:hover { filter: brightness(1.2); }
+.wk-slot.mom    { background: var(--mom-bg); }
+.wk-slot.dad    { background: var(--dad-bg); }
+.wk-slot.split  { background: linear-gradient(135deg, var(--mom-bg) 50%, var(--dad-bg) 50%); }
+.wk-slot.other  { background: #0d0d1a; cursor: default; }
+.wk-slot.other:hover { filter: none; }
+.wk-evt { position: absolute; left: 2px; right: 2px; top: 2px; border-radius: 3px; font-size: 10px; padding: 2px 5px; overflow: hidden; cursor: pointer; z-index: 1; white-space: nowrap; text-overflow: ellipsis; }
+.wk-evt:hover { opacity: .8; }
+.wk-evt.declan  { background: var(--declan-bg);  color: var(--declan-text); }
+.wk-evt.tiernan { background: var(--tiernan-bg); color: var(--tiernan-text); }
+.wk-evt.both    { background: var(--both-bg);    color: var(--both-text); }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.72); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 16px; }
+.overlay.hidden { display: none; }
+.modal { background: var(--modal-bg); border: 1px solid var(--border-md); border-radius: 14px; padding: 22px; width: 100%; max-width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.modal-hdr { font-size: 14px; font-weight: 500; color: var(--text-hi); margin-bottom: 18px; }
+.modal-date-label { font-size: 11px; color: var(--text-mid); margin-left: 8px; font-weight: 400; }
+.frow { margin-bottom: 13px; }
+.flabel { display: block; font-size: 11px; color: var(--text-mid); letter-spacing: .04em; margin-bottom: 5px; }
+input[type=text], input[type=time], textarea, select {
+  width: 100%; background: var(--input-bg); border: 1px solid var(--border-md); border-radius: 7px;
+  padding: 8px 10px; font-size: 13px; color: var(--text-hi); font-family: inherit; transition: border-color .12s;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: #60a5fa; }
+select option { background: var(--modal-bg); }
+textarea { resize: vertical; }
+.kid-btns { display: flex; gap: 7px; }
+.kid-btn { flex: 1; padding: 8px 4px; border: 1px solid var(--border-md); border-radius: 7px; font-size: 12px; font-weight: 500; cursor: pointer; background: transparent; color: var(--text-mid); font-family: inherit; text-align: center; transition: all .12s; }
+.kid-btn:hover { background: rgba(255,255,255,0.07); }
+.kid-btn.sel.declan  { background: var(--declan-bg);  color: var(--declan-text); border-color: var(--declan-bg); }
+.kid-btn.sel.tiernan { background: var(--tiernan-bg); color: var(--tiernan-text); border-color: var(--tiernan-bg); }
+.kid-btn.sel.both    { background: var(--both-bg);    color: var(--both-text);    border-color: var(--both-bg); }
+.time-pair { display: flex; gap: 10px; }
+.time-pair .frow { flex: 1; }
+.modal-actions { display: flex; gap: 8px; margin-top: 18px; }
+.mbtn { flex: 1; padding: 9px; border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; transition: background .12s; }
+.mbtn-save   { background: #2563eb; color: #fff; }
+.mbtn-save:hover { background: #1d4ed8; }
+.mbtn-cancel { background: rgba(255,255,255,0.08); color: var(--text-hi); }
+.mbtn-cancel:hover { background: rgba(255,255,255,0.13); }
+.mbtn-del    { background: rgba(220,38,38,0.18); color: #fca5a5; }
+.mbtn-del:hover { background: rgba(220,38,38,0.28); }
+.hidden { display: none !important; }
+
+/* ---- Day-view popup ---- */
+.dnum { cursor: pointer; }
+.dnum:hover:not(.today) { background: rgba(255,255,255,0.13); border-radius: 4px; }
+#dayOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.72); display: flex; align-items: center; justify-content: center; z-index: 300; padding: 16px; }
+#dayOverlay.hidden { display: none; }
+.day-modal { background: var(--modal-bg); border: 1px solid var(--border-md); border-radius: 14px; padding: 20px; width: 100%; max-width: 360px; max-height: 75vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.day-modal-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 14px; font-weight: 500; color: var(--text-hi); }
+.day-close-btn { background: transparent; border: 1px solid var(--border-md); border-radius: 6px; color: var(--text-mid); cursor: pointer; font-size: 14px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+.day-close-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-hi); }
+.day-no-evts { font-size: 12px; color: var(--text-lo); text-align: center; padding: 20px 0; }
+.day-evt-row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.day-evt-row:last-child { border-bottom: none; }
+.day-evt-pip { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; margin-top: 2px; }
+.day-evt-time { font-size: 11px; color: var(--text-mid); min-width: 60px; padding-top: 1px; }
+.day-evt-title { font-size: 12px; color: var(--text-hi); line-height: 1.4; }
+.day-evt-notes { font-size: 10px; color: var(--text-lo); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="app-title">Declan &amp; Tiernan &#8212; Custody Calendar</div>
+    <div class="app-subtitle">School schedule May&#8211;Jun 14 &amp; Aug 17+ &middot; Summer alternating weeks Jun 15&#8211;Aug 16 (exchanges Mon 8am)</div>
+  </div>
+  <div class="controls">
+    <div class="nav-cluster">
+      <button class="icon-btn" onclick="nav(-1)">&#8592;</button>
+      <div class="nav-label" id="navLabel"></div>
+      <button class="icon-btn" onclick="nav(1)">&#8594;</button>
+    </div>
+    <button class="today-btn" onclick="goToday()">TODAY</button>
+    <div class="view-toggle">
+      <button class="vtog on" id="vbtn-month" onclick="setView('month')">Month</button>
+      <button class="vtog"    id="vbtn-week"  onclick="setView('week')">Week</button>
+    </div>
+    <button class="export-btn" onclick="exportICS()">&#8659; EXPORT .ICS</button>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg"><div class="leg-sq" style="background:#152d52;border:1px solid #93c5fd66"></div>Mom (M&#8211;Th + 1st &amp; 3rd weekends)</div>
+  <div class="leg"><div class="leg-sq" style="background:#4a1030;border:1px solid #f9a8d466"></div>Dad (2nd, 4th &amp; 5th weekends)</div>
+  <div class="leg"><div class="leg-sq" style="background:#fbbf24"></div>Declan</div>
+  <div class="leg"><div class="leg-sq" style="background:#34d399"></div>Tiernan</div>
+  <div class="leg"><div class="leg-sq" style="background:#a78bfa"></div>Both kids</div>
+  <div class="leg"><div class="leg-sq" style="background:linear-gradient(135deg,#0d2240 50%,#38091f 50%);border:1px solid #a78bfa66"></div>Split week</div>
+  <div class="leg"><div class="leg-sq" style="background:rgba(249,115,22,.25);border:1px solid #fb923c66"></div>Vacation</div>
+  <div class="leg"><div class="leg-sq" style="background:rgba(52,211,153,.2);border:1px solid #6ee7b766"></div>Exchange Mon (8am)</div>
+  <div class="hint">Click any day to add an event</div>
+</div>
+
+<div id="calContent"></div>
+
+<div class="overlay hidden" id="overlay" onclick="overlayClick(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-hdr">
+      <span id="modalHeading">Add event</span>
+      <span class="modal-date-label" id="modalDateLabel"></span>
+    </div>
+    <div class="frow">
+      <label class="flabel">Title</label>
+      <input type="text" id="mTitle" placeholder="e.g. Soccer practice" />
+    </div>
+    <div class="frow">
+      <label class="flabel">For</label>
+      <div class="kid-btns">
+        <button class="kid-btn" id="kb-declan"  onclick="pickKid('declan')">Declan</button>
+        <button class="kid-btn" id="kb-tiernan" onclick="pickKid('tiernan')">Tiernan</button>
+        <button class="kid-btn" id="kb-both"    onclick="pickKid('both')">Both</button>
+      </div>
+    </div>
+    <div class="time-pair">
+      <div class="frow"><label class="flabel">Start</label><input type="time" id="mStart" value="09:00" /></div>
+      <div class="frow"><label class="flabel">End</label><input type="time" id="mEnd" value="10:00" /></div>
+    </div>
+    <div class="frow">
+      <label class="flabel">Notes</label>
+      <textarea id="mNotes" rows="2" placeholder="Location, reminder..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="mbtn mbtn-save"   onclick="saveEvt()">Save</button>
+      <button class="mbtn mbtn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="mbtn mbtn-del hidden" id="delBtn" onclick="deleteEvt()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const VIEW_ONLY = new URLSearchParams(location.search).has('view');
+const SCHOOL_END    = new Date(2026, 5, 11);
+const SUMMER_START  = new Date(2026, 5, 15);
+const SCHOOL_RESUME = new Date(2026, 7, 17);
+const REAL_TODAY    = new Date();
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS_S = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+const SPLIT_WEEKS = [
+  { start: '2026-07-06', declan: 'dad', tiernan: 'mom' },
+  { start: '2026-07-13', declan: 'mom', tiernan: 'dad' },
+];
+const VACATION_BLOCKS = [
+  { start: '2026-05-25', days:  1, parent: 'dad', label: "Memorial Day",    type: 'holiday'  },
+  { start: '2026-07-27', days: 10, parent: 'mom', label: "Mom's vacation",  type: 'vacation' },
+  { start: '2026-08-06', days: 10, parent: 'dad', label: "Dad's vacation",  type: 'vacation' },
+  { start: '2026-08-16', days:  1, parent: 'mom', label: "Mom picks up",    type: 'handoff'  },
+];
+const SPECIAL_DAYS = [
+  { date: '2026-08-17', label: "School schedule resumes", tag: 'school-resume' },
+  { date: '2026-08-18', label: "Tiernan - min day",       tag: 'school' },
+  { date: '2026-08-19', label: "Declan - first day",      tag: 'school' },
+];
+const SEED_EVTS = [
+  { id:'seed-june11-pickup', date:'2026-06-11', title:"Dad picks up from school", kid:'both', start:'15:00', end:'15:30', notes:"Mom is letting Dad pick Declan & Tiernan up on the last day of school." }
+];
+const SCHEDULED_EVTS = [
+  { id:'golf-ss-jun15', date:'2026-06-15', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
+  { id:'golf-ss-jun16', date:'2026-06-16', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
+  { id:'golf-ss-jun17', date:'2026-06-17', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
+  { id:'golf-gr-jun18', date:'2026-06-18', kid:'declan', title:"Boys' Golf - Green River GC", start:'16:00', end:'17:00', notes:'Green River GC' },
+  { id:'golf-ss-jun22', date:'2026-06-22', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
+  { id:'golf-ss-jun23', date:'2026-06-23', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
+  { id:'golf-ss-jun24', date:'2026-06-24', kid:'declan', title:"Boys' Golf - Super Sports",   start:'16:00', end:'17:30', notes:'Super Sports' },
+  { id:'golf-gr-jun25', date:'2026-06-25', kid:'declan', title:"Boys' Golf - Green River GC", start:'16:00', end:'17:00', notes:'Green River GC' },
+  { id:'dance-may01-1',  date:'2026-05-01', kid:'tiernan', title:'Dance - Dwarfs',                        start:'17:45', end:'18:15', notes:'Selah, Carley, Nalea' },
+  { id:'dance-may01-2',  date:'2026-05-01', kid:'tiernan', title:'Dance - All Dwarfs + Snow White',       start:'18:15', end:'19:00', notes:'' },
+  { id:'dance-may04-1',  date:'2026-05-04', kid:'tiernan', title:'Dance - Queen in Disguise',             start:'14:45', end:'15:15', notes:'' },
+  { id:'dance-may04-2',  date:'2026-05-04', kid:'tiernan', title:'Dance - Young Snow White',              start:'15:00', end:'15:45', notes:'' },
+  { id:'dance-may04-3',  date:'2026-05-04', kid:'tiernan', title:'Dance - Queen',                         start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-may06-1',  date:'2026-05-06', kid:'tiernan', title:'Dance - Dwarf (Lexi)',                  start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-may06-2',  date:'2026-05-06', kid:'tiernan', title:'Dance - Snow White + Queen',            start:'19:45', end:'20:15', notes:'' },
+  { id:'dance-may08-1',  date:'2026-05-08', kid:'tiernan', title:'Dance - Snow White',                    start:'17:15', end:'17:45', notes:'To Butterfly Class' },
+  { id:'dance-may08-2',  date:'2026-05-08', kid:'tiernan', title:'Dance - All Dwarfs + Snow White',       start:'17:45', end:'18:45', notes:'' },
+  { id:'dance-may08-3',  date:'2026-05-08', kid:'tiernan', title:'Dance - Snow White',                    start:'18:15', end:'18:45', notes:'To Wolf Class' },
+  { id:'dance-may08-4',  date:'2026-05-08', kid:'tiernan', title:'Dance - Finale Audition',               start:'18:45', end:'20:00', notes:'' },
+  { id:'dance-may09-1',  date:'2026-05-09', kid:'tiernan', title:'Dance - Dwarfs',                        start:'07:30', end:'08:00', notes:'Selah, Carley, Nalea' },
+  { id:'dance-may09-2',  date:'2026-05-09', kid:'tiernan', title:'Dance - Snow White',                    start:'09:30', end:'10:00', notes:'To Bird Class' },
+  { id:'dance-may09-3',  date:'2026-05-09', kid:'tiernan', title:'Dance - Queen + Snow White',            start:'10:30', end:'11:00', notes:'To Huntsmen Class' },
+  { id:'dance-may11-1',  date:'2026-05-11', kid:'tiernan', title:'Dance - Queen',                         start:'15:00', end:'15:45', notes:'' },
+  { id:'dance-may11-2',  date:'2026-05-11', kid:'tiernan', title:'Dance - Young Snow White',              start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-may11-3',  date:'2026-05-11', kid:'tiernan', title:'Dance - Forest Trees',                  start:'15:45', end:'16:15', notes:'To Bat Class' },
+  { id:'dance-may11-4',  date:'2026-05-11', kid:'tiernan', title:'Dance - Snow White + Queen',            start:'16:15', end:'16:45', notes:'To Birthday Class' },
+  { id:'dance-may11-5',  date:'2026-05-11', kid:'tiernan', title:'Dance - Village Children',              start:'17:45', end:'18:15', notes:'To Village Maiden Class' },
+  { id:'dance-may11-6',  date:'2026-05-11', kid:'tiernan', title:'Dance - Queen + Young Snow White',      start:'18:15', end:'18:45', notes:'To Castle Servant Class' },
+  { id:'dance-may12-1',  date:'2026-05-12', kid:'tiernan', title:'Dance - Queen',                         start:'17:15', end:'17:45', notes:'To Scarf Servant Class' },
+  { id:'dance-may12-2',  date:'2026-05-12', kid:'tiernan', title:'Dance - Dwarfs',                        start:'18:45', end:'19:15', notes:'Tiernan/Sadie' },
+  { id:'dance-may13-1',  date:'2026-05-13', kid:'tiernan', title:'Dance - Queen',                         start:'16:00', end:'16:30', notes:'To Apple Servant Class' },
+  { id:'dance-may13-2',  date:'2026-05-13', kid:'tiernan', title:'Dance - Snow White',                    start:'19:45', end:'20:15', notes:'' },
+  { id:'dance-may14-1',  date:'2026-05-14', kid:'tiernan', title:'Dance - Dwarf (Emma)',                  start:'15:00', end:'15:30', notes:'' },
+  { id:'dance-may14-2',  date:'2026-05-14', kid:'tiernan', title:'Dance - Queen',                         start:'16:00', end:'16:30', notes:'To Ribbon Servant' },
+  { id:'dance-may16-1',  date:'2026-05-16', kid:'tiernan', title:'Dance - Dwarfs',                        start:'07:30', end:'08:00', notes:'Tiernan/Sadie' },
+  { id:'dance-may16-c',  date:'2026-05-16', kid:'tiernan', title:'Dance - Energy Competition',            start:'08:00', end:'20:00', notes:'Energy Competition' },
+  { id:'dance-may17-c',  date:'2026-05-17', kid:'tiernan', title:'Dance - Energy Competition',            start:'08:00', end:'20:00', notes:'Energy Competition' },
+  { id:'dance-may18-1',  date:'2026-05-18', kid:'tiernan', title:'Dance - Queen',                         start:'14:45', end:'15:15', notes:'' },
+  { id:'dance-may18-2',  date:'2026-05-18', kid:'tiernan', title:'Dance - Young Snow White',              start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-may18-3',  date:'2026-05-18', kid:'tiernan', title:'Dance - Snow White',                    start:'16:15', end:'16:45', notes:'To Bat Class' },
+  { id:'dance-may18-4',  date:'2026-05-18', kid:'tiernan', title:'Dance - Snow White',                    start:'17:15', end:'17:45', notes:'To Squirrel Class' },
+  { id:'dance-may20-1',  date:'2026-05-20', kid:'tiernan', title:'Dance - Dwarf (Lexi)',                  start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-may20-2',  date:'2026-05-20', kid:'tiernan', title:'Dance - Snow White + Queen',            start:'19:45', end:'20:15', notes:'' },
+  { id:'dance-may21',    date:'2026-05-21', kid:'tiernan', title:'Dance - Snow White',                    start:'18:15', end:'18:45', notes:'To Forest Trees Class' },
+  { id:'dance-may26',    date:'2026-05-26', kid:'tiernan', title:'Dance - Dwarfs',                        start:'18:45', end:'19:15', notes:'Tiernan/Sadie' },
+  { id:'dance-may27',    date:'2026-05-27', kid:'tiernan', title:'Dance - Snow White',                    start:'19:45', end:'20:15', notes:'' },
+  { id:'dance-may28-1',  date:'2026-05-28', kid:'tiernan', title:'Dance - Dwarf (Emma)',                  start:'15:00', end:'15:30', notes:'' },
+  { id:'dance-may28-2',  date:'2026-05-28', kid:'tiernan', title:'Dance - Snow White',                    start:'18:15', end:'18:45', notes:'Bats + Snow White to Forest Tree Class' },
+  { id:'dance-may29-1',  date:'2026-05-29', kid:'tiernan', title:'Dance - Dwarfs',                        start:'16:15', end:'16:45', notes:'To Gem Class' },
+  { id:'dance-may29-2',  date:'2026-05-29', kid:'tiernan', title:'Dance - Snow White',                    start:'17:15', end:'17:45', notes:'To Butterfly Class' },
+  { id:'dance-may29-3',  date:'2026-05-29', kid:'tiernan', title:'Dance - Young Snow White, Queen, King', start:'17:45', end:'18:15', notes:'' },
+  { id:'dance-may29-4',  date:'2026-05-29', kid:'tiernan', title:'Dance - Dwarfs',                        start:'18:15', end:'18:45', notes:'Selah, Carley, Nalea' },
+  { id:'dance-may29-5',  date:'2026-05-29', kid:'tiernan', title:'Dance - Snow White',                    start:'18:15', end:'18:45', notes:'To Wolf Class' },
+  { id:'dance-may29-6',  date:'2026-05-29', kid:'tiernan', title:'Dance - Finale Rehearsal',              start:'18:45', end:'20:45', notes:'' },
+  { id:'dance-may30-1',  date:'2026-05-30', kid:'tiernan', title:'Dance - Queen + Snow White',            start:'10:30', end:'11:00', notes:'To Huntsmen Class' },
+  { id:'dance-may30-2',  date:'2026-05-30', kid:'tiernan', title:'Dance - All Dwarfs',                    start:'11:00', end:'12:00', notes:'' },
+  { id:'dance-may30-3',  date:'2026-05-30', kid:'tiernan', title:'Dance - Village Scene',                 start:'12:00', end:'12:45', notes:'' },
+  { id:'dance-may30-4',  date:'2026-05-30', kid:'tiernan', title:'Dance - Wedding Scene',                 start:'12:45', end:'13:30', notes:'' },
+  { id:'dance-may30-5',  date:'2026-05-30', kid:'tiernan', title:'Dance - Forest Scene',                  start:'13:30', end:'14:15', notes:'' },
+  { id:'dance-jun01-1',  date:'2026-06-01', kid:'tiernan', title:'Dance - Queen in Disguise',             start:'14:45', end:'15:15', notes:'' },
+  { id:'dance-jun01-2',  date:'2026-06-01', kid:'tiernan', title:'Dance - Queen',                         start:'15:00', end:'15:45', notes:'' },
+  { id:'dance-jun01-3',  date:'2026-06-01', kid:'tiernan', title:'Dance - Young Snow White',              start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-jun01-4',  date:'2026-06-01', kid:'tiernan', title:'Dance - Snow White + Queen',            start:'16:15', end:'16:45', notes:'To Birthday Class' },
+  { id:'dance-jun01-5',  date:'2026-06-01', kid:'tiernan', title:'Dance - Snow White',                    start:'17:15', end:'17:45', notes:'To Squirrel Class' },
+  { id:'dance-jun01-6',  date:'2026-06-01', kid:'tiernan', title:'Dance - Queen + Young Snow White',      start:'18:15', end:'18:45', notes:'To Castle Servant Class' },
+  { id:'dance-jun02',    date:'2026-06-02', kid:'tiernan', title:'Dance - Queen',                         start:'17:15', end:'17:45', notes:'To Scarf Servant Class' },
+  { id:'dance-jun03-1',  date:'2026-06-03', kid:'tiernan', title:'Dance - Dwarf (Lexi)',                  start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-jun03-2',  date:'2026-06-03', kid:'tiernan', title:'Dance - Queen',                         start:'16:00', end:'16:30', notes:'To Apple Servant Class' },
+  { id:'dance-jun03-3',  date:'2026-06-03', kid:'tiernan', title:'Dance - Snow White + Queen',            start:'19:45', end:'20:15', notes:'' },
+  { id:'dance-jun04',    date:'2026-06-04', kid:'tiernan', title:'Dance - Queen',                         start:'16:00', end:'16:30', notes:'To Ribbon Servant' },
+  { id:'dance-jun05',    date:'2026-06-05', kid:'tiernan', title:'Dance - Dwarfs',                        start:'18:45', end:'19:15', notes:'Selah, Carley, Nalea' },
+  { id:'dance-jun06-1',  date:'2026-06-06', kid:'tiernan', title:'Dance - Snow White',                    start:'09:30', end:'10:00', notes:'To Bird Class' },
+  { id:'dance-jun06-2',  date:'2026-06-06', kid:'tiernan', title:'Dance - Queen + Snow White',            start:'10:30', end:'11:00', notes:'To Huntsmen Class' },
+  { id:'dance-jun06-3',  date:'2026-06-06', kid:'tiernan', title:'Dance - All Dwarfs + Snow White',       start:'11:00', end:'12:00', notes:'' },
+  { id:'dance-jun07',    date:'2026-06-07', kid:'tiernan', title:'Dance - Team Banquet',                  start:'12:00', end:'14:00', notes:'' },
+  { id:'dance-jun08-1',  date:'2026-06-08', kid:'tiernan', title:'Dance - Queen',                         start:'14:45', end:'15:15', notes:'' },
+  { id:'dance-jun08-2',  date:'2026-06-08', kid:'tiernan', title:'Dance - Queen in Disguise',             start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-jun08-3',  date:'2026-06-08', kid:'tiernan', title:'Dance - Young Snow White',              start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-jun08-4',  date:'2026-06-08', kid:'tiernan', title:'Dance - Snow White',                    start:'16:15', end:'16:45', notes:'To Bat Class' },
+  { id:'dance-jun08-5',  date:'2026-06-08', kid:'tiernan', title:'Dance - Queen + Snow White',            start:'17:45', end:'18:15', notes:'To Village Class' },
+  { id:'dance-jun08-6',  date:'2026-06-08', kid:'tiernan', title:'Dance - Queen + Snow White',            start:'18:15', end:'18:45', notes:'To Castle Servant Class' },
+  { id:'dance-jun09',    date:'2026-06-09', kid:'tiernan', title:'Dance - Dwarfs',                        start:'18:45', end:'19:15', notes:'Tiernan/Sadie' },
+  { id:'dance-jun10-1',  date:'2026-06-10', kid:'tiernan', title:'Dance - Dwarf (Lexi)',                  start:'15:15', end:'15:45', notes:'' },
+  { id:'dance-jun10-2',  date:'2026-06-10', kid:'tiernan', title:'Dance - Snow White + Queen',            start:'19:45', end:'20:15', notes:'' },
+  { id:'dance-jun11-1',  date:'2026-06-11', kid:'tiernan', title:'Dance - Dwarf (Emma)',                  start:'15:00', end:'15:30', notes:'' },
+  { id:'dance-jun11-2',  date:'2026-06-11', kid:'tiernan', title:'Dance - Wedding Guest',                 start:'17:15', end:'18:00', notes:'' },
+
+  // ── Additional dance events from Master Schedule (Tiernan) ─────────────
+  { id:'dance-jun11-3',  date:'2026-06-11', kid:'tiernan', title:'Dance - Snow White',                        start:'18:15', end:'18:45', notes:'To Forest Tree Class' },
+  { id:'dance-jun12-1',  date:'2026-06-12', kid:'tiernan', title:'Dance - Dwarfs',                            start:'16:15', end:'16:45', notes:'To Gem Class' },
+  { id:'dance-jun12-2',  date:'2026-06-12', kid:'tiernan', title:'Dance - Dwarfs',                            start:'17:45', end:'18:15', notes:'Selah, Carley, Nalea' },
+  { id:'dance-jun12-3',  date:'2026-06-12', kid:'tiernan', title:'Dance - Finale Rehearsal',                  start:'18:45', end:'20:45', notes:'' },
+  { id:'dance-jun13-1',  date:'2026-06-13', kid:'tiernan', title:'Dance - Scene 1: Opening Castle & Village', start:'12:00', end:'12:45', notes:'' },
+  { id:'dance-jun13-2',  date:'2026-06-13', kid:'tiernan', title:'Dance - Scene 2: Birthday & Forest',        start:'12:45', end:'13:45', notes:'' },
+  { id:'dance-jun13-3',  date:'2026-06-13', kid:'tiernan', title:'Dance - Scene 3: Dwarf House & Gems',       start:'13:45', end:'14:30', notes:'' },
+  { id:'dance-jun13-4',  date:'2026-06-13', kid:'tiernan', title:'Dance - Scene 4: Poison & Forest',          start:'14:30', end:'15:15', notes:'' },
+  { id:'dance-jun13-5',  date:'2026-06-13', kid:'tiernan', title:'Dance - Scene 5: Prince & Wedding',         start:'15:15', end:'16:00', notes:'' },
+  { id:'dance-jun17',    date:'2026-06-17', kid:'tiernan', title:'Dance - Snow White',                        start:'19:45', end:'20:15', notes:'' },
+  { id:'dance-jun19',    date:'2026-06-19', kid:'tiernan', title:'Dance - Finale Rehearsal',                  start:'18:45', end:'20:45', notes:'' },
+  { id:'dance-jun20',    date:'2026-06-20', kid:'tiernan', title:'Dance - All Cast Rehearsal at Elite',        start:'12:00', end:'15:00', notes:'Elite' },
+  { id:'dance-jun22-nat',date:'2026-06-22', kid:'tiernan', title:'Dance - Nationals',                         start:'08:00', end:'20:00', notes:'Nationals' },
+  { id:'dance-jun23-nat',date:'2026-06-23', kid:'tiernan', title:'Dance - Nationals',                         start:'08:00', end:'20:00', notes:'Nationals' },
+  { id:'dance-jun24-nat',date:'2026-06-24', kid:'tiernan', title:'Dance - Nationals',                         start:'08:00', end:'20:00', notes:'Nationals' },
+  { id:'dance-jun25-nat',date:'2026-06-25', kid:'tiernan', title:'Dance - Nationals',                         start:'08:00', end:'20:00', notes:'Nationals' },
+  { id:'dance-jun26-nat',date:'2026-06-26', kid:'tiernan', title:'Dance - Nationals',                         start:'08:00', end:'20:00', notes:'Nationals' },
+  { id:'dance-jun27-nat',date:'2026-06-27', kid:'tiernan', title:'Dance - Nationals',                         start:'08:00', end:'20:00', notes:'Nationals' },
+  { id:'dance-jun27-dress',date:'2026-06-27',kid:'tiernan', title:'Dance - All Cast Dress Rehearsal at Elite', start:'12:00', end:'15:30', notes:'Elite' },
+  { id:'dance-jun28-nat',date:'2026-06-28', kid:'tiernan', title:'Dance - Nationals',                         start:'08:00', end:'20:00', notes:'Nationals' },
+  { id:'dance-jun29',    date:'2026-06-29', kid:'tiernan', title:'Dance - Special Parts Pool Party',          start:'11:00', end:'14:00', notes:'' },
+  { id:'dance-jun30',    date:'2026-06-30', kid:'tiernan', title:'Dance - All Cast Finale Rehearsal',         start:'12:00', end:'14:30', notes:'' },
+  { id:'dance-jul01',    date:'2026-07-01', kid:'tiernan', title:'Dance - All Cast Finale Rehearsal',         start:'12:00', end:'14:30', notes:'' },
+  { id:'dance-jul02',    date:'2026-07-02', kid:'tiernan', title:'Dance - All Cast Finale Rehearsal',         start:'12:00', end:'14:30', notes:'' },
+  { id:'dance-jul09',    date:'2026-07-09', kid:'tiernan', title:'Dance - All Cast Dress Rehearsal Servite',  start:'09:00', end:'16:00', notes:'Servite' },
+  { id:'dance-jul10',    date:'2026-07-10', kid:'tiernan', title:'Dance - Recital Servite',                   start:'18:00', end:'21:00', notes:'TBA time - Servite' },
+  { id:'dance-jul11',    date:'2026-07-11', kid:'tiernan', title:'Dance - Recital Servite',                   start:'14:00', end:'17:00', notes:'TBA time - Servite' },
+
+  // ── Scout events 2026 (Declan) — Philmont TRIP excluded ────────────────
+  // January 2026
+  // February 2026
+  // March 2026
+  // April 2026
+  // May 2026
+  { id:'scout-may02-phon1', date:'2026-05-02', kid:'declan', title:'Scouts - Philmont Overnight Backpacking',start:'09:00', end:'23:59', notes:'Mt. San Jacinto State Park' },
+  { id:'scout-may03-phon2', date:'2026-05-03', kid:'declan', title:'Scouts - Philmont Overnight Backpacking',start:'00:00', end:'14:00', notes:'Mt. San Jacinto - return' },
+  { id:'scout-may03-eagle', date:'2026-05-03', kid:'declan', title:"Scouts - Eagle Project Work Day",        start:'09:00', end:'17:00', notes:"Gavin Lin - 17431 Village Dr, Tustin" },
+  { id:'scout-may03-plc',   date:'2026-05-03', kid:'declan', title:'Scouts - PLC Meeting',                   start:'17:00', end:'18:00', notes:'Citrus Ranch Park' },
+  { id:'scout-may05-comm',  date:'2026-05-05', kid:'declan', title:'Scouts - Committee Meeting',             start:'19:00', end:'20:30', notes:'Red Hill Lutheran B23' },
+  { id:'scout-may05-mtg',   date:'2026-05-05', kid:'declan', title:'Scouts - Weekly Troop Meeting',          start:'19:00', end:'20:30', notes:'Red Hill Lutheran CLC' },
+  { id:'scout-may09-eagle1',date:'2026-05-09', kid:'declan', title:"Scouts - Eagle Project Work Day",        start:'09:00', end:'17:00', notes:"Gavin Lin's Eagle Project" },
+  { id:'scout-may09-eagle2',date:'2026-05-09', kid:'declan', title:"Scouts - Eagle Project Work Day",        start:'09:30', end:'14:00', notes:"Topher Seiden's Eagle Project" },
+  { id:'scout-may12-mtg',   date:'2026-05-12', kid:'declan', title:'Scouts - Weekly Troop Meeting',          start:'19:00', end:'20:30', notes:'Red Hill Lutheran CLC' },
+  { id:'scout-may15-yu1',   date:'2026-05-15', kid:'declan', title:'Scouts - Yucaipa Regional Campout',      start:'17:00', end:'23:59', notes:'Depart Red Hill Lutheran' },
+  { id:'scout-may16-yu2',   date:'2026-05-16', kid:'declan', title:'Scouts - Yucaipa Regional Campout',      start:'00:00', end:'23:59', notes:'Overnight - Yucaipa Regional Park' },
+  { id:'scout-may17-yu3',   date:'2026-05-17', kid:'declan', title:'Scouts - Yucaipa Regional Campout',      start:'00:00', end:'14:00', notes:'Return ~1-2pm' },
+  { id:'scout-may19-mtg',   date:'2026-05-19', kid:'declan', title:'Scouts - Weekly Troop Meeting',          start:'19:00', end:'20:30', notes:'Red Hill Lutheran CLC' },
+  { id:'scout-may26-mtg',   date:'2026-05-26', kid:'declan', title:'Scouts - Weekly Troop Meeting',          start:'19:00', end:'20:30', notes:'Red Hill Lutheran CLC' },
+  { id:'scout-may31-phmt',  date:'2026-05-31', kid:'declan', title:'Scouts - Philmont Training Hike (Mt. Baldy)',start:'06:00', end:'15:00', notes:'Manker Campground, Mt Baldy - mandatory' },
+  // June 2026
+  { id:'scout-jun02-comm',  date:'2026-06-02', kid:'declan', title:'Scouts - Committee Meeting',             start:'19:00', end:'20:30', notes:'Red Hill Lutheran B23' },
+  // July 2026 (Philmont trip Jun 26-Jul 9 excluded)
+  { id:'scout-jul07-comm',  date:'2026-07-07', kid:'declan', title:'Scouts - Committee Meeting',             start:'19:00', end:'20:30', notes:'Red Hill Lutheran B23' },
+  { id:'scout-jul19-ce1',   date:'2026-07-19', kid:'declan', title:'Scouts - Summer Camp Easton',            start:'00:00', end:'23:59', notes:'Camp Easton - Lake Coeur dAlene, Idaho' },
+  { id:'scout-jul20-ce2',   date:'2026-07-20', kid:'declan', title:'Scouts - Summer Camp Easton',            start:'00:00', end:'23:59', notes:'Camp Easton, Idaho' },
+  { id:'scout-jul21-ce3',   date:'2026-07-21', kid:'declan', title:'Scouts - Summer Camp Easton',            start:'00:00', end:'23:59', notes:'Camp Easton, Idaho' },
+  { id:'scout-jul22-ce4',   date:'2026-07-22', kid:'declan', title:'Scouts - Summer Camp Easton',            start:'00:00', end:'23:59', notes:'Camp Easton, Idaho' },
+  { id:'scout-jul23-ce5',   date:'2026-07-23', kid:'declan', title:'Scouts - Summer Camp Easton',            start:'00:00', end:'23:59', notes:'Camp Easton, Idaho' },
+  { id:'scout-jul24-ce6',   date:'2026-07-24', kid:'declan', title:'Scouts - Summer Camp Easton',            start:'00:00', end:'23:59', notes:'Camp Easton, Idaho' },
+  { id:'scout-jul25-ce7',   date:'2026-07-25', kid:'declan', title:'Scouts - Summer Camp Easton',            start:'00:00', end:'23:59', notes:'Return July 25-26' },
+  // August 2026
+  { id:'scout-aug04-comm',  date:'2026-08-04', kid:'declan', title:'Scouts - Committee Meeting',             start:'19:00', end:'20:30', notes:'Red Hill Lutheran B23' },
+];
+
+// ---- STORAGE ----
+const CAL_VERSION = '2026-v4-trim'; // bump this whenever SCHEDULED_EVTS changes to clear stale cache
+
+// Deleted IDs tracked separately so SCHEDULED_EVTS never resurrect after delete
+function loadDeleted() {
+  try { const r = localStorage.getItem('cc_deleted'); return r ? new Set(JSON.parse(r)) : new Set(); }
+  catch(e) { return new Set(); }
+}
+function persistDeleted(set) {
+  localStorage.setItem('cc_deleted', JSON.stringify([...set]));
+}
+function mergeScheduled(evts) {
+  const deleted = loadDeleted();
+  const ids = new Set(evts.map(e => e.id));
+  SEED_EVTS.forEach(e => { if (!ids.has(e.id) && !deleted.has(e.id)) evts.push({...e}); });
+  SCHEDULED_EVTS.forEach(e => { if (!ids.has(e.id) && !deleted.has(e.id)) evts.push({...e}); });
+  return evts;
+}
+function loadEvts() {
+  try {
+    // If the file has been updated, wipe cached events so SCHEDULED_EVTS is the clean source.
+    // User-manually-added events (id starts 'usr-') are preserved across version bumps.
+    if (localStorage.getItem('cc_version') !== CAL_VERSION) {
+      const raw = localStorage.getItem('cc_events');
+      const userEvts = raw ? JSON.parse(raw).filter(e => String(e.id).startsWith('usr-')) : [];
+      localStorage.setItem('cc_events', JSON.stringify(userEvts));
+      localStorage.setItem('cc_version', CAL_VERSION);
+    }
+    const raw = localStorage.getItem('cc_events');
+    const base = raw !== null ? JSON.parse(raw) : [];
+    const merged = mergeScheduled(base);
+    localStorage.setItem('cc_events', JSON.stringify(merged));
+    return merged;
+  } catch(e) { return mergeScheduled([]); }
+}
+function persist() {
+  localStorage.setItem('cc_events', JSON.stringify(S.events));
+  syncToServer(S.events);
+}
+
+
+// ---- SERVER SYNC (Cloudflare Worker) ----
+// After deploying the Worker, replace this URL with your actual Worker URL
+const WORKER_URL = '/edit/events';
+
+async function loadFromServer() {
+  try {
+    const r = await fetch(WORKER_URL);
+    if (!r.ok) throw new Error('fetch failed');
+    const userEvts = await r.json();
+    const merged = mergeScheduled(userEvts);
+    S.events = merged;
+    localStorage.setItem('cc_events', JSON.stringify(merged));
+    localStorage.setItem('cc_version', CAL_VERSION);
+    render();
+  } catch(e) { console.warn('Server load failed, using localStorage:', e); }
+}
+
+async function syncToServer(events) {
+  const userEvts = events.filter(e => String(e.id).startsWith('usr-'));
+  try {
+    await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userEvts),
+    });
+  } catch(e) { console.warn('Server sync failed:', e); }
+}
+
+// ---- STATE ----
+const S = { view:'month', year:2026, month:4, weekStart:mondayOf(new Date(2026,4,1)), events:loadEvts(), editId:null };
+let modalKid = 'both', modalDateStr = '';
+
+// ---- HELPERS ----
+function mondayOf(d) {
+  const t = new Date(d); t.setHours(12,0,0,0);
+  const dow = t.getDay(); t.setDate(t.getDate() - (dow===0?6:dow-1)); return t;
+}
+function sameDay(a,b) { return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(); }
+function isToday(d) { return sameDay(d, REAL_TODAY); }
+function dateKey(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function keyToDate(k) { const [y,m,d]=k.split('-').map(Number); return new Date(y,m-1,d); }
+function fmtDate(d) { return DAYS_S[d.getDay()]+', '+MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate(); }
+function fmtTime(t) {
+  const [h,m]=t.split(':').map(Number); const ap=h>=12?'PM':'AM'; const hr=h%12||12;
+  return m===0?hr+ap:hr+':'+String(m).padStart(2,'0')+ap;
+}
+function getVacationBlock(date) {
+  const d=new Date(date); d.setHours(12);
+  for (const vb of VACATION_BLOCKS) {
+    const s=keyToDate(vb.start), e=new Date(s); e.setDate(s.getDate()+vb.days-1); e.setHours(23);
+    if (d>=s&&d<=e) return vb;
+  }
+  return null;
+}
+function getSplitWeek(date) {
+  const d=new Date(date); d.setHours(12);
+  for (const sw of SPLIT_WEEKS) {
+    const mon=keyToDate(sw.start), sun=new Date(mon); sun.setDate(mon.getDate()+6); sun.setHours(23);
+    if (d>=mon&&d<=sun) return sw;
+  }
+  return null;
+}
+function getSummerWeekIndex(date) {
+  const d=new Date(date); d.setHours(12); const ms=new Date(SUMMER_START); ms.setHours(12);
+  return Math.floor((d-ms)/(7*24*3600*1000));
+}
+function getCustody(date) {
+  const d=new Date(date); d.setHours(12);
+  const vac=getVacationBlock(d); if (vac) return vac.parent;
+  const sw=getSplitWeek(d); if (sw) return 'split';
+  if (d>=SUMMER_START&&d<SCHOOL_RESUME) return getSummerWeekIndex(d)%2===0?'mom':'dad';
+  const dow=d.getDay();
+  if (dow>=1&&dow<=4) return 'mom';
+  const fri=new Date(d);
+  if (dow===0) fri.setDate(d.getDate()-2);
+  if (dow===6) fri.setDate(d.getDate()-1);
+  let count=0; const yr=fri.getFullYear(),mo=fri.getMonth(),fd=fri.getDate();
+  for (let i=1;i<=fd;i++) if (new Date(yr,mo,i).getDay()===5) count++;
+  return (count===1||count===3)?'mom':'dad';
+}
+function isSummerExchangeMonday(date) {
+  const d=new Date(date); d.setHours(12);
+  return d>=SUMMER_START&&d<SCHOOL_RESUME&&d.getDay()===1;
+}
+function evtsFor(d) {
+  const key=dateKey(d);
+  return S.events.filter(e=>e.date===key).sort((a,b)=>a.start.localeCompare(b.start));
+}
+
+// ---- MONTH VIEW ----
+function renderMonth() {
+  document.getElementById('navLabel').textContent=MONTHS[S.month]+' '+S.year;
+  const firstDOW=new Date(S.year,S.month,1).getDay();
+  const daysInMo=new Date(S.year,S.month+1,0).getDate();
+  const prevDays=new Date(S.year,S.month,0).getDate();
+  let html='<div class="month-grid">';
+  DAYS_S.forEach(d=>html+='<div class="day-hdr">'+d+'</div>');
+  for (let i=0;i<firstDOW;i++) html+=buildMonthCell(new Date(S.year,S.month-1,prevDays-firstDOW+1+i),true);
+  for (let n=1;n<=daysInMo;n++) html+=buildMonthCell(new Date(S.year,S.month,n),false);
+  const trailing=42-(firstDOW+daysInMo);
+  for (let i=1;i<=trailing;i++) html+=buildMonthCell(new Date(S.year,S.month+1,i),true);
+  html+='</div>';
+  document.getElementById('calContent').innerHTML=html;
+}
+function buildMonthCell(date,isOther) {
+  const cust=getCustody(date);
+  const cls='dcell '+cust+(isOther?' faded':'');
+  const todayCls=isToday(date)?' today':'';
+  const key=dateKey(date);
+  const evts=isOther?[]:evtsFor(date);
+  const onclick=(!isOther && !VIEW_ONLY)?'onclick="if(!event.target.classList.contains(\'dnum\')){openAdd(\''+key+'\')}"':'';
+  let whoLabel='';
+  if (!isOther) {
+    if (cust==='split') {
+      const sw=getSplitWeek(date);
+      whoLabel='<div class="split-kid sk-declan">Declan → '+sw.declan.toUpperCase()+'</div>'
+              +'<div class="split-kid sk-tiernan">Tiernan → '+sw.tiernan.toUpperCase()+'</div>';
+    } else { whoLabel='<div class="custody-who">'+cust.toUpperCase()+'</div>'; }
+  }
+  let specTag='';
+  if (!isOther) {
+    const special=SPECIAL_DAYS.find(s=>sameDay(date,keyToDate(s.date)));
+    if (special) specTag+='<div class="special-tag tag-'+special.tag+'">&#9733; '+special.label.toUpperCase()+'</div>';
+    if (sameDay(date,SCHOOL_END)) specTag+='<div class="special-tag tag-lastday">LAST DAY &middot; DAD PICKUP</div>';
+    const vac=getVacationBlock(date);
+    if (sameDay(date,SUMMER_START)) {
+      specTag+='<div class="special-tag tag-summer">SUMMER STARTS</div>';
+      specTag+='<div class="special-tag tag-exchange">&#8646; MOM &middot; 8am</div>';
+    } else if (vac&&sameDay(date,keyToDate(vac.start))) {
+      specTag='<div class="special-tag tag-vacation">&#9992; '+vac.label.toUpperCase()+' &middot; 8am</div>';
+    } else if (vac) {
+      specTag='<div class="special-tag tag-vacation-mid">&#9992; '+vac.label.toUpperCase()+'</div>';
+    } else if (isSummerExchangeMonday(date)) {
+      if (cust==='split') specTag='<div class="special-tag tag-split-hdr">&#8646; SPLIT WEEK &middot; 8am</div>';
+      else { const inc=getSummerWeekIndex(date)%2===0?'MOM':'DAD'; specTag='<div class="special-tag tag-exchange">&#8646; '+inc+' &middot; 8am</div>'; }
+    }
+  }
+  let evtHtml='';
+  evts.slice(0,3).forEach(e=>{
+    evtHtml+='<div class="epill '+e.kid+'" onclick="event.stopPropagation();openEdit(\''+e.id+'\')">'+fmtTime(e.start)+' '+e.title+'</div>';
+  });
+  if (evts.length>3) evtHtml+='<div class="more-evts">+'+( evts.length-3)+' more</div>';
+  return '<div class="'+cls+'" '+onclick+'><div class="dnum'+todayCls+'" onclick="event.stopPropagation();openDay(\''+key+'\')">'+date.getDate()+'</div>'+whoLabel+specTag+evtHtml+'</div>';
+}
+
+// ---- WEEK VIEW ----
+function renderWeek() {
+  const ws=new Date(S.weekStart), we=new Date(ws); we.setDate(ws.getDate()+6);
+  const fmt=d=>MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate();
+  document.getElementById('navLabel').textContent=fmt(ws)+' – '+fmt(we)+', '+we.getFullYear();
+  const dates=Array.from({length:7},(_,i)=>{const d=new Date(ws);d.setDate(ws.getDate()+i);return d;});
+  let html='<div class="week-scroll"><div class="week-grid"><div class="wk-corner"></div>';
+  dates.forEach(d=>{
+    const cust=getCustody(d);
+    const cls=cust==='split'?'split':(cust==='mom'||cust==='dad')?cust:'other';
+    const todayCls=isToday(d)?' today':'';
+    let exchLabel='';
+    if (isSummerExchangeMonday(d)) exchLabel=cust==='split'
+      ?'<span style="font-size:9px;color:#c4b5fd;display:block;margin-top:1px">&#8646; split 8am</span>'
+      :'<span style="font-size:9px;color:#6ee7b7;display:block;margin-top:1px">&#8646; exchange 8am</span>';
+    let splitInfo='';
+    if (cust==='split'){const sw=getSplitWeek(d);splitInfo='<span style="font-size:8px;color:#fde68a;display:block">D→'+sw.declan.toUpperCase()+'</span><span style="font-size:8px;color:#6ee7b7;display:block">T→'+sw.tiernan.toUpperCase()+'</span>';}
+    html+='<div class="wk-day-hdr '+cls+'"><span class="wk-dname">'+DAYS_S[d.getDay()]+'</span><span class="wk-dnum'+todayCls+'">'+d.getDate()+'</span>'+exchLabel+splitInfo+'</div>';
+  });
+  for (let h=6;h<=21;h++) {
+    const label=h<12?h+'am':h===12?'12pm':(h-12)+'pm';
+    html+='<div class="wk-time">'+label+'</div>';
+    dates.forEach(d=>{
+      const cust=getCustody(d);
+      const cls=cust==='split'?'split':(cust==='mom'||cust==='dad')?cust:'other';
+      const key=dateKey(d);
+      const ts=String(h).padStart(2,'0')+':00';
+      const oc=(cls!=='other' && !VIEW_ONLY)?'onclick="openAddTime(\''+key+'\',\''+ts+'\')"':'';
+      const here=evtsFor(d).filter(e=>parseInt(e.start.split(':')[0],10)===h);
+      let inner='';
+      here.forEach(e=>{
+        const eh=parseInt(e.end.split(':')[0],10);
+        const ht=Math.max(1,eh-h)*52-5;
+        inner+='<div class="wk-evt '+e.kid+'" style="height:'+ht+'px" onclick="event.stopPropagation();openEdit(\''+e.id+'\')">'+fmtTime(e.start)+' '+e.title+'</div>';
+      });
+      html+='<div class="wk-slot '+cls+'" '+oc+'>'+inner+'</div>';
+    });
+  }
+  html+='</div></div>';
+  document.getElementById('calContent').innerHTML=html;
+}
+
+// ---- NAVIGATION ----
+function nav(dir) {
+  if (S.view==='month') {
+    S.month+=dir;
+    if (S.month>11){S.month=0;S.year++;} if (S.month<0){S.month=11;S.year--;}
+  } else { const ws=new Date(S.weekStart); ws.setDate(ws.getDate()+dir*7); S.weekStart=ws; }
+  render();
+}
+function goToday() {
+  const t=REAL_TODAY; S.month=t.getMonth(); S.year=t.getFullYear(); S.weekStart=mondayOf(t); render();
+}
+function setView(v) {
+  S.view=v;
+  if (v==='week') S.weekStart=mondayOf(new Date(S.year,S.month,1));
+  document.getElementById('vbtn-month').className='vtog'+(v==='month'?' on':'');
+  document.getElementById('vbtn-week').className='vtog'+(v==='week'?' on':'');
+  render();
+}
+function render() { S.view==='month'?renderMonth():renderWeek(); }
+
+// ---- DAY VIEW ----
+function openDay(dateStr) {
+  const d = keyToDate(dateStr);
+  document.getElementById('dayModalTitle').textContent = fmtDate(d);
+  const evts = evtsFor(d);
+  const body = document.getElementById('dayModalBody');
+  if (evts.length === 0) {
+    body.innerHTML = '<div class="day-no-evts">No events this day</div>';
+  } else {
+    body.innerHTML = evts.map(e => {
+      const col = e.kid==='declan'?'var(--declan-bg)':e.kid==='tiernan'?'var(--tiernan-bg)':'var(--both-bg)';
+      const notes = e.notes ? '<div class="day-evt-notes">'+e.notes+'</div>' : '';
+      return '<div class="day-evt-row">'
+        +'<div class="day-evt-pip" style="background:'+col+'"></div>'
+        +'<div class="day-evt-time">'+fmtTime(e.start)+'</div>'
+        +'<div style="flex:1"><div class="day-evt-title">'+e.title+'</div>'+notes+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  document.getElementById('dayOverlay').classList.remove('hidden');
+}
+function closeDayModal(evt) {
+  if (!evt || evt.target===document.getElementById('dayOverlay'))
+    document.getElementById('dayOverlay').classList.add('hidden');
+}
+
+// ---- MODAL ----
+function openAdd(dateStr) {
+  S.editId=null; modalDateStr=dateStr;
+  document.getElementById('modalHeading').textContent='Add event';
+  document.getElementById('modalDateLabel').textContent=fmtDate(keyToDate(dateStr));
+  document.getElementById('mTitle').value='';
+  document.getElementById('mStart').value='09:00';
+  document.getElementById('mEnd').value='10:00';
+  document.getElementById('mNotes').value='';
+  document.getElementById('delBtn').classList.add('hidden');
+  pickKid('both'); showModal();
+}
+function openAddTime(dateStr,time) {
+  openAdd(dateStr);
+  document.getElementById('mStart').value=time;
+  const h=parseInt(time.split(':')[0],10);
+  document.getElementById('mEnd').value=String(Math.min(21,h+1)).padStart(2,'0')+':00';
+}
+function openEdit(id) {
+  const e=S.events.find(x=>x.id===id); if (!e) return;
+  S.editId=id; modalDateStr=e.date;
+  document.getElementById('modalHeading').textContent='Edit event';
+  document.getElementById('modalDateLabel').textContent=fmtDate(keyToDate(e.date));
+  document.getElementById('mTitle').value=e.title;
+  document.getElementById('mStart').value=e.start;
+  document.getElementById('mEnd').value=e.end;
+  document.getElementById('mNotes').value=e.notes||'';
+  document.getElementById('delBtn').classList.remove('hidden');
+  pickKid(e.kid); showModal();
+}
+function pickKid(k) {
+  modalKid=k;
+  ['declan','tiernan','both'].forEach(n=>{
+    document.getElementById('kb-'+n).className='kid-btn'+(n===k?' sel '+n:'');
+  });
+}
+function showModal() {
+  document.getElementById('overlay').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('mTitle').focus(),50);
+}
+function closeModal() { document.getElementById('overlay').classList.add('hidden'); S.editId=null; }
+function overlayClick(e) { if (e.target===document.getElementById('overlay')) closeModal(); }
+
+// ---- SAVE & DELETE ----
+function saveEvt() {
+  const title=document.getElementById('mTitle').value.trim();
+  if (!title) { document.getElementById('mTitle').focus(); return; }
+  const start=document.getElementById('mStart').value;
+  const end=document.getElementById('mEnd').value;
+  const notes=document.getElementById('mNotes').value.trim();
+  if (S.editId) {
+    const evt=S.events.find(e=>e.id===S.editId);
+    if (evt) { evt.title=title; evt.kid=modalKid; evt.start=start; evt.end=end; evt.notes=notes; }
+  } else {
+    S.events.push({id:'usr-'+Date.now(), date:modalDateStr, title, kid:modalKid, start, end, notes});
+  }
+  persist(); closeModal(); if (VIEW_ONLY) {
+  document.querySelector('.export-btn').style.display = 'none';
+  document.querySelector('.hint').style.display       = 'none';
+  document.getElementById('overlay').style.display    = 'none';
+}
+render();
+}
+function deleteEvt() {
+  if (!S.editId) return;
+  // Save to deleted set so it never comes back from SCHEDULED_EVTS on reload
+  const deleted=loadDeleted(); deleted.add(S.editId); persistDeleted(deleted);
+  S.events=S.events.filter(e=>e.id!==S.editId);
+  persist(); closeModal(); if (VIEW_ONLY) {
+  document.querySelector('.export-btn').style.display = 'none';
+  document.querySelector('.hint').style.display       = 'none';
+  document.getElementById('overlay').style.display    = 'none';
+}
+render();
+}
+
+// ---- EXPORT .ICS ----
+function exportICS() {
+  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Declan & Tiernan Custody Calendar//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  S.events.forEach(e=>{
+    const dt=keyToDate(e.date);
+    const yr=dt.getFullYear(), mo=String(dt.getMonth()+1).padStart(2,'0'), dy=String(dt.getDate()).padStart(2,'0');
+    const [sh,sm]=e.start.split(':').map(Number), [eh,em]=e.end.split(':').map(Number);
+    const ds=yr+mo+dy+'T'+String(sh).padStart(2,'0')+String(sm).padStart(2,'0')+'00';
+    const de=yr+mo+dy+'T'+String(eh).padStart(2,'0')+String(em).padStart(2,'0')+'00';
+    const kl=e.kid==='both'?'Both':e.kid.charAt(0).toUpperCase()+e.kid.slice(1);
+    lines.push('BEGIN:VEVENT','DTSTART:'+ds,'DTEND:'+de,'SUMMARY:['+kl+'] '+e.title,'DESCRIPTION:'+(e.notes||'').replace(/\n/g,'\\n'),'UID:'+e.id+'@custody-cal','END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  const blob=new Blob([lines.join('\r\n')],{type:'text/calendar;charset=utf-8'});
+  const url=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=url; a.download='custody_calendar.ics';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+if (VIEW_ONLY) {
+  document.querySelector('.export-btn').style.display = 'none';
+  document.querySelector('.hint').style.display       = 'none';
+  document.getElementById('overlay').style.display    = 'none';
+}
+render();
+loadFromServer();
+</script>
+
+<div class="hidden" id="dayOverlay" onclick="closeDayModal(event)">
+  <div class="day-modal" onclick="event.stopPropagation()">
+    <div class="day-modal-hdr">
+      <span id="dayModalTitle"></span>
+      <button class="day-close-btn" onclick="closeDayModal()">&#x2715;</button>
+    </div>
+    <div id="dayModalBody"></div>
+  </div>
+</div>
+</body>
+</html>
