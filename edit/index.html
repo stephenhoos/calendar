@@ -232,7 +232,7 @@ textarea { resize: vertical; }
       <button class="vtog on" id="vbtn-month" onclick="setView('month')">Month</button>
       <button class="vtog"    id="vbtn-week"  onclick="setView('week')">Week</button>
     </div>
-    <button class="export-btn" onclick="exportICS()">&#8659; EXPORT .ICS</button>
+    <button class="export-btn" onclick="subscribeCalendar()">&#128197; SUBSCRIBE</button>
   </div>
 </div>
 
@@ -516,6 +516,11 @@ function persist() {
 // ---- SERVER SYNC (Cloudflare Worker) ----
 // After deploying the Worker, replace this URL with your actual Worker URL
 const WORKER_URL = '/edit/events';
+const SUBSCRIBE_URL = 'webcal://calendar.hoos.org/calendar.ics';
+
+function subscribeCalendar() {
+  window.location.href = SUBSCRIBE_URL;
+}
 
 async function loadFromServer() {
   try {
@@ -820,25 +825,6 @@ function deleteEvt() {
   document.getElementById('overlay').style.display    = 'none';
 }
 render();
-}
-
-// ---- EXPORT .ICS ----
-function exportICS() {
-  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Declan & Tiernan Custody Calendar//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-  S.events.forEach(e=>{
-    const dt=keyToDate(e.date);
-    const yr=dt.getFullYear(), mo=String(dt.getMonth()+1).padStart(2,'0'), dy=String(dt.getDate()).padStart(2,'0');
-    const [sh,sm]=e.start.split(':').map(Number), [eh,em]=e.end.split(':').map(Number);
-    const ds=yr+mo+dy+'T'+String(sh).padStart(2,'0')+String(sm).padStart(2,'0')+'00';
-    const de=yr+mo+dy+'T'+String(eh).padStart(2,'0')+String(em).padStart(2,'0')+'00';
-    const kl=e.kid==='both'?'Both':e.kid.charAt(0).toUpperCase()+e.kid.slice(1);
-    lines.push('BEGIN:VEVENT','DTSTART:'+ds,'DTEND:'+de,'SUMMARY:['+kl+'] '+e.title,'DESCRIPTION:'+(e.notes||'').replace(/\n/g,'\\n'),'UID:'+e.id+'@custody-cal','END:VEVENT');
-  });
-  lines.push('END:VCALENDAR');
-  const blob=new Blob([lines.join('\r\n')],{type:'text/calendar;charset=utf-8'});
-  const url=URL.createObjectURL(blob), a=document.createElement('a');
-  a.href=url; a.download='custody_calendar.ics';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
 if (VIEW_ONLY) {

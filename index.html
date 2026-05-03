@@ -232,6 +232,7 @@ textarea { resize: vertical; }
       <button class="vtog on" id="vbtn-month" onclick="setView('month')">Month</button>
       <button class="vtog"    id="vbtn-week"  onclick="setView('week')">Week</button>
     </div>
+    <button class="export-btn" onclick="subscribeCalendar()">&#128197; SUBSCRIBE</button>
   </div>
 </div>
 
@@ -477,6 +478,11 @@ function persist() { localStorage.setItem('cc_events', JSON.stringify(S.events))
 // ---- SERVER SYNC (Cloudflare Worker) ----
 // After deploying the Worker, replace this URL with your actual Worker URL
 const WORKER_URL = '/events';
+const SUBSCRIBE_URL = 'webcal://calendar.hoos.org/calendar.ics';
+
+function subscribeCalendar() {
+  window.location.href = SUBSCRIBE_URL;
+}
 
 async function loadFromServer() {
   try {

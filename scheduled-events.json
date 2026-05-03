@@ -1,0 +1,1325 @@
+[
+  {
+    "id": "seed-june11-pickup",
+    "date": "2026-06-11",
+    "title": "Dad picks up from school",
+    "kid": "both",
+    "start": "15:00",
+    "end": "15:30",
+    "notes": "Mom is letting Dad pick Declan & Tiernan up on the last day of school."
+  },
+  {
+    "id": "hacker-ai-beg-jun15",
+    "date": "2026-06-15",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Beginner",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "hacker-ai-beg-jun16",
+    "date": "2026-06-16",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Beginner",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "hacker-ai-beg-jun17",
+    "date": "2026-06-17",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Beginner",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "hacker-ai-beg-jun18",
+    "date": "2026-06-18",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Beginner",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "hacker-ai-int-jun22",
+    "date": "2026-06-22",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Intermediate",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "hacker-ai-int-jun23",
+    "date": "2026-06-23",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Intermediate",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "hacker-ai-int-jun24",
+    "date": "2026-06-24",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Intermediate",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "hacker-ai-int-jun25",
+    "date": "2026-06-25",
+    "kid": "declan",
+    "title": "Coastline Ethical Hacking Camp - Intermediate",
+    "start": "09:00",
+    "end": "15:00",
+    "notes": "Coastline College Garden Grove Campus, 12901 S Euclid St. Lunch provided."
+  },
+  {
+    "id": "golf-ss-jun15",
+    "date": "2026-06-15",
+    "kid": "declan",
+    "title": "Boys' Golf - Super Sports",
+    "start": "16:00",
+    "end": "17:30",
+    "notes": "Super Sports"
+  },
+  {
+    "id": "golf-ss-jun16",
+    "date": "2026-06-16",
+    "kid": "declan",
+    "title": "Boys' Golf - Super Sports",
+    "start": "16:00",
+    "end": "17:30",
+    "notes": "Super Sports"
+  },
+  {
+    "id": "golf-ss-jun17",
+    "date": "2026-06-17",
+    "kid": "declan",
+    "title": "Boys' Golf - Super Sports",
+    "start": "16:00",
+    "end": "17:30",
+    "notes": "Super Sports"
+  },
+  {
+    "id": "golf-gr-jun18",
+    "date": "2026-06-18",
+    "kid": "declan",
+    "title": "Boys' Golf - Green River GC",
+    "start": "16:00",
+    "end": "17:00",
+    "notes": "Green River GC"
+  },
+  {
+    "id": "golf-ss-jun22",
+    "date": "2026-06-22",
+    "kid": "declan",
+    "title": "Boys' Golf - Super Sports",
+    "start": "16:00",
+    "end": "17:30",
+    "notes": "Super Sports"
+  },
+  {
+    "id": "golf-ss-jun23",
+    "date": "2026-06-23",
+    "kid": "declan",
+    "title": "Boys' Golf - Super Sports",
+    "start": "16:00",
+    "end": "17:30",
+    "notes": "Super Sports"
+  },
+  {
+    "id": "golf-ss-jun24",
+    "date": "2026-06-24",
+    "kid": "declan",
+    "title": "Boys' Golf - Super Sports",
+    "start": "16:00",
+    "end": "17:30",
+    "notes": "Super Sports"
+  },
+  {
+    "id": "golf-gr-jun25",
+    "date": "2026-06-25",
+    "kid": "declan",
+    "title": "Boys' Golf - Green River GC",
+    "start": "16:00",
+    "end": "17:00",
+    "notes": "Green River GC"
+  },
+  {
+    "id": "dance-may01-1",
+    "date": "2026-05-01",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "17:45",
+    "end": "18:15",
+    "notes": "Selah, Carley, Nalea"
+  },
+  {
+    "id": "dance-may01-2",
+    "date": "2026-05-01",
+    "kid": "tiernan",
+    "title": "Dance - All Dwarfs + Snow White",
+    "start": "18:15",
+    "end": "19:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-may04-1",
+    "date": "2026-05-04",
+    "kid": "tiernan",
+    "title": "Dance - Queen in Disguise",
+    "start": "14:45",
+    "end": "15:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-may04-2",
+    "date": "2026-05-04",
+    "kid": "tiernan",
+    "title": "Dance - Young Snow White",
+    "start": "15:00",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may04-3",
+    "date": "2026-05-04",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may06-1",
+    "date": "2026-05-06",
+    "kid": "tiernan",
+    "title": "Dance - Dwarf (Lexi)",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may06-2",
+    "date": "2026-05-06",
+    "kid": "tiernan",
+    "title": "Dance - Snow White + Queen",
+    "start": "19:45",
+    "end": "20:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-may08-1",
+    "date": "2026-05-08",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "17:15",
+    "end": "17:45",
+    "notes": "To Butterfly Class"
+  },
+  {
+    "id": "dance-may08-2",
+    "date": "2026-05-08",
+    "kid": "tiernan",
+    "title": "Dance - All Dwarfs + Snow White",
+    "start": "17:45",
+    "end": "18:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may08-3",
+    "date": "2026-05-08",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "To Wolf Class"
+  },
+  {
+    "id": "dance-may08-4",
+    "date": "2026-05-08",
+    "kid": "tiernan",
+    "title": "Dance - Finale Audition",
+    "start": "18:45",
+    "end": "20:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-may09-1",
+    "date": "2026-05-09",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "07:30",
+    "end": "08:00",
+    "notes": "Selah, Carley, Nalea"
+  },
+  {
+    "id": "dance-may09-2",
+    "date": "2026-05-09",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "09:30",
+    "end": "10:00",
+    "notes": "To Bird Class"
+  },
+  {
+    "id": "dance-may09-3",
+    "date": "2026-05-09",
+    "kid": "tiernan",
+    "title": "Dance - Queen + Snow White",
+    "start": "10:30",
+    "end": "11:00",
+    "notes": "To Huntsmen Class"
+  },
+  {
+    "id": "dance-may11-1",
+    "date": "2026-05-11",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "15:00",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may11-2",
+    "date": "2026-05-11",
+    "kid": "tiernan",
+    "title": "Dance - Young Snow White",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may11-3",
+    "date": "2026-05-11",
+    "kid": "tiernan",
+    "title": "Dance - Forest Trees",
+    "start": "15:45",
+    "end": "16:15",
+    "notes": "To Bat Class"
+  },
+  {
+    "id": "dance-may11-4",
+    "date": "2026-05-11",
+    "kid": "tiernan",
+    "title": "Dance - Snow White + Queen",
+    "start": "16:15",
+    "end": "16:45",
+    "notes": "To Birthday Class"
+  },
+  {
+    "id": "dance-may11-5",
+    "date": "2026-05-11",
+    "kid": "tiernan",
+    "title": "Dance - Village Children",
+    "start": "17:45",
+    "end": "18:15",
+    "notes": "To Village Maiden Class"
+  },
+  {
+    "id": "dance-may11-6",
+    "date": "2026-05-11",
+    "kid": "tiernan",
+    "title": "Dance - Queen + Young Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "To Castle Servant Class"
+  },
+  {
+    "id": "dance-may12-1",
+    "date": "2026-05-12",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "17:15",
+    "end": "17:45",
+    "notes": "To Scarf Servant Class"
+  },
+  {
+    "id": "dance-may12-2",
+    "date": "2026-05-12",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "18:45",
+    "end": "19:15",
+    "notes": "Tiernan/Sadie"
+  },
+  {
+    "id": "dance-may13-1",
+    "date": "2026-05-13",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "16:00",
+    "end": "16:30",
+    "notes": "To Apple Servant Class"
+  },
+  {
+    "id": "dance-may13-2",
+    "date": "2026-05-13",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "19:45",
+    "end": "20:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-may14-1",
+    "date": "2026-05-14",
+    "kid": "tiernan",
+    "title": "Dance - Dwarf (Emma)",
+    "start": "15:00",
+    "end": "15:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-may14-2",
+    "date": "2026-05-14",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "16:00",
+    "end": "16:30",
+    "notes": "To Ribbon Servant"
+  },
+  {
+    "id": "dance-may16-1",
+    "date": "2026-05-16",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "07:30",
+    "end": "08:00",
+    "notes": "Tiernan/Sadie"
+  },
+  {
+    "id": "dance-may16-c",
+    "date": "2026-05-16",
+    "kid": "tiernan",
+    "title": "Dance - Energy Competition",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Energy Competition"
+  },
+  {
+    "id": "dance-may17-c",
+    "date": "2026-05-17",
+    "kid": "tiernan",
+    "title": "Dance - Energy Competition",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Energy Competition"
+  },
+  {
+    "id": "dance-may18-1",
+    "date": "2026-05-18",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "14:45",
+    "end": "15:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-may18-2",
+    "date": "2026-05-18",
+    "kid": "tiernan",
+    "title": "Dance - Young Snow White",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may18-3",
+    "date": "2026-05-18",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "16:15",
+    "end": "16:45",
+    "notes": "To Bat Class"
+  },
+  {
+    "id": "dance-may18-4",
+    "date": "2026-05-18",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "17:15",
+    "end": "17:45",
+    "notes": "To Squirrel Class"
+  },
+  {
+    "id": "dance-may20-1",
+    "date": "2026-05-20",
+    "kid": "tiernan",
+    "title": "Dance - Dwarf (Lexi)",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may20-2",
+    "date": "2026-05-20",
+    "kid": "tiernan",
+    "title": "Dance - Snow White + Queen",
+    "start": "19:45",
+    "end": "20:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-may21",
+    "date": "2026-05-21",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "To Forest Trees Class"
+  },
+  {
+    "id": "dance-may26",
+    "date": "2026-05-26",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "18:45",
+    "end": "19:15",
+    "notes": "Tiernan/Sadie"
+  },
+  {
+    "id": "dance-may27",
+    "date": "2026-05-27",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "19:45",
+    "end": "20:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-may28-1",
+    "date": "2026-05-28",
+    "kid": "tiernan",
+    "title": "Dance - Dwarf (Emma)",
+    "start": "15:00",
+    "end": "15:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-may28-2",
+    "date": "2026-05-28",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "Bats + Snow White to Forest Tree Class"
+  },
+  {
+    "id": "dance-may29-1",
+    "date": "2026-05-29",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "16:15",
+    "end": "16:45",
+    "notes": "To Gem Class"
+  },
+  {
+    "id": "dance-may29-2",
+    "date": "2026-05-29",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "17:15",
+    "end": "17:45",
+    "notes": "To Butterfly Class"
+  },
+  {
+    "id": "dance-may29-3",
+    "date": "2026-05-29",
+    "kid": "tiernan",
+    "title": "Dance - Young Snow White, Queen, King",
+    "start": "17:45",
+    "end": "18:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-may29-4",
+    "date": "2026-05-29",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "Selah, Carley, Nalea"
+  },
+  {
+    "id": "dance-may29-5",
+    "date": "2026-05-29",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "To Wolf Class"
+  },
+  {
+    "id": "dance-may29-6",
+    "date": "2026-05-29",
+    "kid": "tiernan",
+    "title": "Dance - Finale Rehearsal",
+    "start": "18:45",
+    "end": "20:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may30-1",
+    "date": "2026-05-30",
+    "kid": "tiernan",
+    "title": "Dance - Queen + Snow White",
+    "start": "10:30",
+    "end": "11:00",
+    "notes": "To Huntsmen Class"
+  },
+  {
+    "id": "dance-may30-2",
+    "date": "2026-05-30",
+    "kid": "tiernan",
+    "title": "Dance - All Dwarfs",
+    "start": "11:00",
+    "end": "12:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-may30-3",
+    "date": "2026-05-30",
+    "kid": "tiernan",
+    "title": "Dance - Village Scene",
+    "start": "12:00",
+    "end": "12:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-may30-4",
+    "date": "2026-05-30",
+    "kid": "tiernan",
+    "title": "Dance - Wedding Scene",
+    "start": "12:45",
+    "end": "13:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-may30-5",
+    "date": "2026-05-30",
+    "kid": "tiernan",
+    "title": "Dance - Forest Scene",
+    "start": "13:30",
+    "end": "14:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun01-1",
+    "date": "2026-06-01",
+    "kid": "tiernan",
+    "title": "Dance - Queen in Disguise",
+    "start": "14:45",
+    "end": "15:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun01-2",
+    "date": "2026-06-01",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "15:00",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun01-3",
+    "date": "2026-06-01",
+    "kid": "tiernan",
+    "title": "Dance - Young Snow White",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun01-4",
+    "date": "2026-06-01",
+    "kid": "tiernan",
+    "title": "Dance - Snow White + Queen",
+    "start": "16:15",
+    "end": "16:45",
+    "notes": "To Birthday Class"
+  },
+  {
+    "id": "dance-jun01-5",
+    "date": "2026-06-01",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "17:15",
+    "end": "17:45",
+    "notes": "To Squirrel Class"
+  },
+  {
+    "id": "dance-jun01-6",
+    "date": "2026-06-01",
+    "kid": "tiernan",
+    "title": "Dance - Queen + Young Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "To Castle Servant Class"
+  },
+  {
+    "id": "dance-jun02",
+    "date": "2026-06-02",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "17:15",
+    "end": "17:45",
+    "notes": "To Scarf Servant Class"
+  },
+  {
+    "id": "dance-jun03-1",
+    "date": "2026-06-03",
+    "kid": "tiernan",
+    "title": "Dance - Dwarf (Lexi)",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun03-2",
+    "date": "2026-06-03",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "16:00",
+    "end": "16:30",
+    "notes": "To Apple Servant Class"
+  },
+  {
+    "id": "dance-jun03-3",
+    "date": "2026-06-03",
+    "kid": "tiernan",
+    "title": "Dance - Snow White + Queen",
+    "start": "19:45",
+    "end": "20:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun04",
+    "date": "2026-06-04",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "16:00",
+    "end": "16:30",
+    "notes": "To Ribbon Servant"
+  },
+  {
+    "id": "dance-jun05",
+    "date": "2026-06-05",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "18:45",
+    "end": "19:15",
+    "notes": "Selah, Carley, Nalea"
+  },
+  {
+    "id": "dance-jun06-1",
+    "date": "2026-06-06",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "09:30",
+    "end": "10:00",
+    "notes": "To Bird Class"
+  },
+  {
+    "id": "dance-jun06-2",
+    "date": "2026-06-06",
+    "kid": "tiernan",
+    "title": "Dance - Queen + Snow White",
+    "start": "10:30",
+    "end": "11:00",
+    "notes": "To Huntsmen Class"
+  },
+  {
+    "id": "dance-jun06-3",
+    "date": "2026-06-06",
+    "kid": "tiernan",
+    "title": "Dance - All Dwarfs + Snow White",
+    "start": "11:00",
+    "end": "12:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun07",
+    "date": "2026-06-07",
+    "kid": "tiernan",
+    "title": "Dance - Team Banquet",
+    "start": "12:00",
+    "end": "14:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun08-1",
+    "date": "2026-06-08",
+    "kid": "tiernan",
+    "title": "Dance - Queen",
+    "start": "14:45",
+    "end": "15:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun08-2",
+    "date": "2026-06-08",
+    "kid": "tiernan",
+    "title": "Dance - Queen in Disguise",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun08-3",
+    "date": "2026-06-08",
+    "kid": "tiernan",
+    "title": "Dance - Young Snow White",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun08-4",
+    "date": "2026-06-08",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "16:15",
+    "end": "16:45",
+    "notes": "To Bat Class"
+  },
+  {
+    "id": "dance-jun08-5",
+    "date": "2026-06-08",
+    "kid": "tiernan",
+    "title": "Dance - Queen + Snow White",
+    "start": "17:45",
+    "end": "18:15",
+    "notes": "To Village Class"
+  },
+  {
+    "id": "dance-jun08-6",
+    "date": "2026-06-08",
+    "kid": "tiernan",
+    "title": "Dance - Queen + Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "To Castle Servant Class"
+  },
+  {
+    "id": "dance-jun09",
+    "date": "2026-06-09",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "18:45",
+    "end": "19:15",
+    "notes": "Tiernan/Sadie"
+  },
+  {
+    "id": "dance-jun10-1",
+    "date": "2026-06-10",
+    "kid": "tiernan",
+    "title": "Dance - Dwarf (Lexi)",
+    "start": "15:15",
+    "end": "15:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun10-2",
+    "date": "2026-06-10",
+    "kid": "tiernan",
+    "title": "Dance - Snow White + Queen",
+    "start": "19:45",
+    "end": "20:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun11-1",
+    "date": "2026-06-11",
+    "kid": "tiernan",
+    "title": "Dance - Dwarf (Emma)",
+    "start": "15:00",
+    "end": "15:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun11-2",
+    "date": "2026-06-11",
+    "kid": "tiernan",
+    "title": "Dance - Wedding Guest",
+    "start": "17:15",
+    "end": "18:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun11-3",
+    "date": "2026-06-11",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "18:15",
+    "end": "18:45",
+    "notes": "To Forest Tree Class"
+  },
+  {
+    "id": "dance-jun12-1",
+    "date": "2026-06-12",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "16:15",
+    "end": "16:45",
+    "notes": "To Gem Class"
+  },
+  {
+    "id": "dance-jun12-2",
+    "date": "2026-06-12",
+    "kid": "tiernan",
+    "title": "Dance - Dwarfs",
+    "start": "17:45",
+    "end": "18:15",
+    "notes": "Selah, Carley, Nalea"
+  },
+  {
+    "id": "dance-jun12-3",
+    "date": "2026-06-12",
+    "kid": "tiernan",
+    "title": "Dance - Finale Rehearsal",
+    "start": "18:45",
+    "end": "20:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun13-1",
+    "date": "2026-06-13",
+    "kid": "tiernan",
+    "title": "Dance - Scene 1: Opening Castle & Village",
+    "start": "12:00",
+    "end": "12:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun13-2",
+    "date": "2026-06-13",
+    "kid": "tiernan",
+    "title": "Dance - Scene 2: Birthday & Forest",
+    "start": "12:45",
+    "end": "13:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun13-3",
+    "date": "2026-06-13",
+    "kid": "tiernan",
+    "title": "Dance - Scene 3: Dwarf House & Gems",
+    "start": "13:45",
+    "end": "14:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun13-4",
+    "date": "2026-06-13",
+    "kid": "tiernan",
+    "title": "Dance - Scene 4: Poison & Forest",
+    "start": "14:30",
+    "end": "15:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun13-5",
+    "date": "2026-06-13",
+    "kid": "tiernan",
+    "title": "Dance - Scene 5: Prince & Wedding",
+    "start": "15:15",
+    "end": "16:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun17",
+    "date": "2026-06-17",
+    "kid": "tiernan",
+    "title": "Dance - Snow White",
+    "start": "19:45",
+    "end": "20:15",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun19",
+    "date": "2026-06-19",
+    "kid": "tiernan",
+    "title": "Dance - Finale Rehearsal",
+    "start": "18:45",
+    "end": "20:45",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun20",
+    "date": "2026-06-20",
+    "kid": "tiernan",
+    "title": "Dance - All Cast Rehearsal at Elite",
+    "start": "12:00",
+    "end": "15:00",
+    "notes": "Elite"
+  },
+  {
+    "id": "dance-jun22-nat",
+    "date": "2026-06-22",
+    "kid": "tiernan",
+    "title": "Dance - Nationals",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Nationals"
+  },
+  {
+    "id": "dance-jun23-nat",
+    "date": "2026-06-23",
+    "kid": "tiernan",
+    "title": "Dance - Nationals",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Nationals"
+  },
+  {
+    "id": "dance-jun24-nat",
+    "date": "2026-06-24",
+    "kid": "tiernan",
+    "title": "Dance - Nationals",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Nationals"
+  },
+  {
+    "id": "dance-jun25-nat",
+    "date": "2026-06-25",
+    "kid": "tiernan",
+    "title": "Dance - Nationals",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Nationals"
+  },
+  {
+    "id": "dance-jun26-nat",
+    "date": "2026-06-26",
+    "kid": "tiernan",
+    "title": "Dance - Nationals",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Nationals"
+  },
+  {
+    "id": "dance-jun27-nat",
+    "date": "2026-06-27",
+    "kid": "tiernan",
+    "title": "Dance - Nationals",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Nationals"
+  },
+  {
+    "id": "dance-jun27-dress",
+    "date": "2026-06-27",
+    "kid": "tiernan",
+    "title": "Dance - All Cast Dress Rehearsal at Elite",
+    "start": "12:00",
+    "end": "15:30",
+    "notes": "Elite"
+  },
+  {
+    "id": "dance-jun28-nat",
+    "date": "2026-06-28",
+    "kid": "tiernan",
+    "title": "Dance - Nationals",
+    "start": "08:00",
+    "end": "20:00",
+    "notes": "Nationals"
+  },
+  {
+    "id": "dance-jun29",
+    "date": "2026-06-29",
+    "kid": "tiernan",
+    "title": "Dance - Special Parts Pool Party",
+    "start": "11:00",
+    "end": "14:00",
+    "notes": ""
+  },
+  {
+    "id": "dance-jun30",
+    "date": "2026-06-30",
+    "kid": "tiernan",
+    "title": "Dance - All Cast Finale Rehearsal",
+    "start": "12:00",
+    "end": "14:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-jul01",
+    "date": "2026-07-01",
+    "kid": "tiernan",
+    "title": "Dance - All Cast Finale Rehearsal",
+    "start": "12:00",
+    "end": "14:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-jul02",
+    "date": "2026-07-02",
+    "kid": "tiernan",
+    "title": "Dance - All Cast Finale Rehearsal",
+    "start": "12:00",
+    "end": "14:30",
+    "notes": ""
+  },
+  {
+    "id": "dance-jul09",
+    "date": "2026-07-09",
+    "kid": "tiernan",
+    "title": "Dance - All Cast Dress Rehearsal Servite",
+    "start": "09:00",
+    "end": "16:00",
+    "notes": "Servite"
+  },
+  {
+    "id": "dance-jul10",
+    "date": "2026-07-10",
+    "kid": "tiernan",
+    "title": "Dance - Recital Servite",
+    "start": "18:00",
+    "end": "21:00",
+    "notes": "TBA time - Servite"
+  },
+  {
+    "id": "dance-jul11",
+    "date": "2026-07-11",
+    "kid": "tiernan",
+    "title": "Dance - Recital Servite",
+    "start": "14:00",
+    "end": "17:00",
+    "notes": "TBA time - Servite"
+  },
+  {
+    "id": "scout-may02-phon1",
+    "date": "2026-05-02",
+    "kid": "declan",
+    "title": "Scouts - Philmont Overnight Backpacking",
+    "start": "09:00",
+    "end": "23:59",
+    "notes": "Mt. San Jacinto State Park"
+  },
+  {
+    "id": "scout-may03-phon2",
+    "date": "2026-05-03",
+    "kid": "declan",
+    "title": "Scouts - Philmont Overnight Backpacking",
+    "start": "00:00",
+    "end": "14:00",
+    "notes": "Mt. San Jacinto - return"
+  },
+  {
+    "id": "scout-may03-eagle",
+    "date": "2026-05-03",
+    "kid": "declan",
+    "title": "Scouts - Eagle Project Work Day",
+    "start": "09:00",
+    "end": "17:00",
+    "notes": "Gavin Lin - 17431 Village Dr, Tustin"
+  },
+  {
+    "id": "scout-may03-plc",
+    "date": "2026-05-03",
+    "kid": "declan",
+    "title": "Scouts - PLC Meeting",
+    "start": "17:00",
+    "end": "18:00",
+    "notes": "Citrus Ranch Park"
+  },
+  {
+    "id": "scout-may05-comm",
+    "date": "2026-05-05",
+    "kid": "declan",
+    "title": "Scouts - Committee Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran B23"
+  },
+  {
+    "id": "scout-may05-mtg",
+    "date": "2026-05-05",
+    "kid": "declan",
+    "title": "Scouts - Weekly Troop Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran CLC"
+  },
+  {
+    "id": "scout-may09-eagle1",
+    "date": "2026-05-09",
+    "kid": "declan",
+    "title": "Scouts - Eagle Project Work Day",
+    "start": "09:00",
+    "end": "17:00",
+    "notes": "Gavin Lin's Eagle Project"
+  },
+  {
+    "id": "scout-may09-eagle2",
+    "date": "2026-05-09",
+    "kid": "declan",
+    "title": "Scouts - Eagle Project Work Day",
+    "start": "09:30",
+    "end": "14:00",
+    "notes": "Topher Seiden's Eagle Project"
+  },
+  {
+    "id": "scout-may12-mtg",
+    "date": "2026-05-12",
+    "kid": "declan",
+    "title": "Scouts - Weekly Troop Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran CLC"
+  },
+  {
+    "id": "scout-may15-yu1",
+    "date": "2026-05-15",
+    "kid": "declan",
+    "title": "Scouts - Yucaipa Regional Campout",
+    "start": "17:00",
+    "end": "23:59",
+    "notes": "Depart Red Hill Lutheran"
+  },
+  {
+    "id": "scout-may16-yu2",
+    "date": "2026-05-16",
+    "kid": "declan",
+    "title": "Scouts - Yucaipa Regional Campout",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Overnight - Yucaipa Regional Park"
+  },
+  {
+    "id": "scout-may17-yu3",
+    "date": "2026-05-17",
+    "kid": "declan",
+    "title": "Scouts - Yucaipa Regional Campout",
+    "start": "00:00",
+    "end": "14:00",
+    "notes": "Return ~1-2pm"
+  },
+  {
+    "id": "scout-may19-mtg",
+    "date": "2026-05-19",
+    "kid": "declan",
+    "title": "Scouts - Weekly Troop Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran CLC"
+  },
+  {
+    "id": "scout-may26-mtg",
+    "date": "2026-05-26",
+    "kid": "declan",
+    "title": "Scouts - Weekly Troop Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran CLC"
+  },
+  {
+    "id": "scout-may31-phmt",
+    "date": "2026-05-31",
+    "kid": "declan",
+    "title": "Scouts - Philmont Training Hike (Mt. Baldy)",
+    "start": "06:00",
+    "end": "15:00",
+    "notes": "Manker Campground, Mt Baldy - mandatory"
+  },
+  {
+    "id": "scout-jun02-comm",
+    "date": "2026-06-02",
+    "kid": "declan",
+    "title": "Scouts - Committee Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran B23"
+  },
+  {
+    "id": "scout-jul07-comm",
+    "date": "2026-07-07",
+    "kid": "declan",
+    "title": "Scouts - Committee Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran B23"
+  },
+  {
+    "id": "scout-jul19-ce1",
+    "date": "2026-07-19",
+    "kid": "declan",
+    "title": "Scouts - Summer Camp Easton",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Camp Easton - Lake Coeur dAlene, Idaho"
+  },
+  {
+    "id": "scout-jul20-ce2",
+    "date": "2026-07-20",
+    "kid": "declan",
+    "title": "Scouts - Summer Camp Easton",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Camp Easton, Idaho"
+  },
+  {
+    "id": "scout-jul21-ce3",
+    "date": "2026-07-21",
+    "kid": "declan",
+    "title": "Scouts - Summer Camp Easton",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Camp Easton, Idaho"
+  },
+  {
+    "id": "scout-jul22-ce4",
+    "date": "2026-07-22",
+    "kid": "declan",
+    "title": "Scouts - Summer Camp Easton",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Camp Easton, Idaho"
+  },
+  {
+    "id": "scout-jul23-ce5",
+    "date": "2026-07-23",
+    "kid": "declan",
+    "title": "Scouts - Summer Camp Easton",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Camp Easton, Idaho"
+  },
+  {
+    "id": "scout-jul24-ce6",
+    "date": "2026-07-24",
+    "kid": "declan",
+    "title": "Scouts - Summer Camp Easton",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Camp Easton, Idaho"
+  },
+  {
+    "id": "scout-jul25-ce7",
+    "date": "2026-07-25",
+    "kid": "declan",
+    "title": "Scouts - Summer Camp Easton",
+    "start": "00:00",
+    "end": "23:59",
+    "notes": "Return July 25-26"
+  },
+  {
+    "id": "scout-aug04-comm",
+    "date": "2026-08-04",
+    "kid": "declan",
+    "title": "Scouts - Committee Meeting",
+    "start": "19:00",
+    "end": "20:30",
+    "notes": "Red Hill Lutheran B23"
+  }
+]
