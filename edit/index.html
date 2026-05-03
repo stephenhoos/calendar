@@ -507,9 +507,9 @@ function loadEvts() {
     return merged;
   } catch(e) { return mergeScheduled([]); }
 }
-function persist() {
+async function persist() {
   localStorage.setItem('cc_events', JSON.stringify(S.events));
-  syncToServer(S.events);
+  await syncToServer(S.events);
 }
 
 
@@ -524,7 +524,7 @@ function subscribeCalendar() {
 
 async function loadFromServer() {
   try {
-    const r = await fetch(WORKER_URL);
+    const r = await fetch(WORKER_URL, { cache: 'no-store', credentials: 'same-origin' });
     if (!r.ok) throw new Error('fetch failed');
     const userEvts = await r.json();
     const merged = mergeScheduled(userEvts);
@@ -538,12 +538,18 @@ async function loadFromServer() {
 async function syncToServer(events) {
   const userEvts = events.filter(e => String(e.id).startsWith('usr-'));
   try {
-    await fetch(WORKER_URL, {
+    const r = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
+      credentials: 'same-origin',
       body: JSON.stringify(userEvts),
     });
-  } catch(e) { console.warn('Server sync failed:', e); }
+    if (!r.ok) throw new Error('sync failed: '+r.status);
+  } catch(e) {
+    console.warn('Server sync failed:', e);
+    throw e;
+  }
 }
 
 // ---- STATE ----
@@ -795,7 +801,7 @@ function closeModal() { document.getElementById('overlay').classList.add('hidden
 function overlayClick(e) { if (e.target===document.getElementById('overlay')) closeModal(); }
 
 // ---- SAVE & DELETE ----
-function saveEvt() {
+async function saveEvt() {
   const title=document.getElementById('mTitle').value.trim();
   if (!title) { document.getElementById('mTitle').focus(); return; }
   const start=document.getElementById('mStart').value;
@@ -807,19 +813,29 @@ function saveEvt() {
   } else {
     S.events.push({id:'usr-'+Date.now(), date:modalDateStr, title, kid:modalKid, start, end, notes});
   }
-  persist(); closeModal(); if (VIEW_ONLY) {
+  try {
+    await persist();
+  } catch(e) {
+    alert('This event was saved in this browser, but did not sync to the shared calendar. Please refresh, log in again if needed, and save it again.');
+  }
+  closeModal(); if (VIEW_ONLY) {
   document.querySelector('.export-btn').style.display = 'none';
   document.querySelector('.hint').style.display       = 'none';
   document.getElementById('overlay').style.display    = 'none';
 }
 render();
 }
-function deleteEvt() {
+async function deleteEvt() {
   if (!S.editId) return;
   // Save to deleted set so it never comes back from SCHEDULED_EVTS on reload
   const deleted=loadDeleted(); deleted.add(S.editId); persistDeleted(deleted);
   S.events=S.events.filter(e=>e.id!==S.editId);
-  persist(); closeModal(); if (VIEW_ONLY) {
+  try {
+    await persist();
+  } catch(e) {
+    alert('This deletion was saved in this browser, but did not sync to the shared calendar. Please refresh, log in again if needed, and delete it again.');
+  }
+  closeModal(); if (VIEW_ONLY) {
   document.querySelector('.export-btn').style.display = 'none';
   document.querySelector('.hint').style.display       = 'none';
   document.getElementById('overlay').style.display    = 'none';
