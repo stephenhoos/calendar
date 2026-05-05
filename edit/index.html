@@ -124,9 +124,12 @@ body {
 .dcell.dad   .dnum { color: var(--dad-text); }
 .dcell.summer .dnum, .dcell.other .dnum { color: var(--text-lo); }
 .dnum.today { background: #60a5fa; color: #0c1e3a; font-weight: 600; }
-.custody-who { font-size: 9px; font-weight: 600; letter-spacing: .06em; margin-bottom: 4px; opacity: .55; }
-.dcell.mom .custody-who { color: var(--mom-accent); }
-.dcell.dad .custody-who { color: var(--dad-accent); }
+.custody-who {
+  display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: .08em;
+  margin-bottom: 4px; padding: 1px 5px; border-radius: 3px; opacity: 1;
+}
+.dcell.mom .custody-who { color: #dbeafe; background: rgba(147,197,253,.18); }
+.dcell.dad .custody-who { color: #fce7f3; background: rgba(249,168,212,.18); }
 .special-tag { display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .05em; padding: 1px 5px; border-radius: 3px; margin-bottom: 3px; }
 .tag-lastday  { background: rgba(251,191,36,.2);  color: #fbbf24; }
 .tag-summer   { background: rgba(99,102,241,.15); color: #818cf8; }
