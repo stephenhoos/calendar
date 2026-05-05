@@ -95,7 +95,7 @@ body {
 }
 .day-hdr {
   background: var(--chrome-bg); padding: 7px 4px; text-align: center;
-  font-size: 11px; font-weight: 500; letter-spacing: .06em; color: var(--text-lo);
+  font-size: 11px; font-weight: 800; letter-spacing: .06em; color: #39ff14;
   border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
 }
 .dcell {
@@ -146,10 +146,12 @@ body {
 .wk-day-hdr.summer { background: var(--summer-bg); }
 .wk-day-hdr.other  { background: var(--chrome-bg); }
 .wk-day-hdr.split  { background: linear-gradient(135deg, var(--mom-soft) 50%, var(--dad-soft) 50%); }
-.wk-dname { font-size: 10px; letter-spacing: .05em; display: block; }
-.wk-day-hdr.mom    .wk-dname { color: var(--mom-accent); }
-.wk-day-hdr.dad    .wk-dname { color: var(--dad-accent); }
-.wk-day-hdr.summer .wk-dname, .wk-day-hdr.other .wk-dname { color: var(--text-lo); }
+.wk-dname { font-size: 10px; font-weight: 800; letter-spacing: .05em; display: block; color: #39ff14; }
+.wk-day-hdr.mom    .wk-dname,
+.wk-day-hdr.dad    .wk-dname,
+.wk-day-hdr.summer .wk-dname,
+.wk-day-hdr.other  .wk-dname,
+.wk-day-hdr.split  .wk-dname { color: #39ff14; }
 .wk-dnum { font-size: 17px; font-weight: 500; display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; }
 .wk-day-hdr.mom    .wk-dnum { color: var(--mom-text); }
 .wk-day-hdr.dad    .wk-dnum { color: var(--dad-text); }
